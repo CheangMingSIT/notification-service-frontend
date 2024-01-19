@@ -8,7 +8,8 @@ import {
   Registration,
   ResetPassword,
 } from "./pages/Authentication";
-import { Dashboard } from "./pages/Dashboard";
+import { Overview } from "./pages/Overview";
+import { Records } from "./pages/Records";
 import { LoginRoot, Root } from "./pages/Root";
 import {
   forgotPasswordAction,
@@ -51,19 +52,19 @@ const router = createBrowserRouter([
       {
         path: "/Overview",
         index: true,
-        element: <Dashboard />,
+        element: <Overview />,
       },
       {
-        path: "/NotificationLog",
-        element: <h3>Notification Log</h3>,
+        path: "/NotificationRecords",
+        element: <Records />,
       },
       {
         path: "/Analytics",
         element: <h3>Analytics</h3>,
       },
       {
-        path: "/Users",
-        element: <h3>Users</h3>,
+        path: "/Security",
+        element: <h3>Security</h3>,
       },
       {
         path: "/ApiKeys",
