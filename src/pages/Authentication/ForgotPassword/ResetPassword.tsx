@@ -1,22 +1,26 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
 import { ResetPasswordForm } from "../../../components";
+import { PasswordValidationProvider } from "../../../util";
 
 export function ResetPassword() {
+  const theme = useTheme();
   return (
     <>
-      <Container fixed>
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="center"
-          style={{ minHeight: "100vh" }}
-        >
-          <Grid item xs={12} md={6}>
-            <Typography variant="h4">Reset Password</Typography>
-            <ResetPasswordForm />
-          </Grid>
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: "100vh" }}
+      >
+        <Grid item xs={18} md={12} lg={6}>
+          <Typography variant="h4">Reset Password</Typography>
+          <Box marginTop={theme.spacing(4)}>
+            <PasswordValidationProvider>
+              <ResetPasswordForm />
+            </PasswordValidationProvider>
+          </Box>
         </Grid>
-      </Container>
+      </Grid>
     </>
   );
 }

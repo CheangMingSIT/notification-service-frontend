@@ -1,5 +1,5 @@
-import { json, redirect } from "react-router-dom";
-import { baseURL } from "../../util/config/config";
+import { redirect } from "react-router-dom";
+import { baseURL } from "../../util/Config/config";
 
 export async function loginAction({ request }) {
   const data = await request.formData();
@@ -17,7 +17,7 @@ export async function loginAction({ request }) {
   });
 
   if (!response.ok) {
-    return json({ error: response.statusText }, response.status);
+    return response.json();
   }
   const { token } = await response.json();
   localStorage.setItem("token", token);

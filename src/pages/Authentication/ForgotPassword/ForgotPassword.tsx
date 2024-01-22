@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ForgotPasswordForm } from "../../../components";
 
@@ -7,21 +7,22 @@ export function ForgotPassword() {
   const redirectToLoginPage = () => {
     navigate("/");
   };
+  const theme = useTheme();
   return (
     <>
-      <Container fixed>
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="center"
-          style={{ minHeight: "100vh" }}
-        >
-          <Grid item xs={12} md={6}>
-            <Typography variant="h4">Forgot Password?</Typography>
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        sx={{ minHeight: "100vh" }}
+      >
+        <Grid item xs={18} md={12} lg={6}>
+          <Typography variant="h4">Forgot Password?</Typography>
+          <Box marginTop={theme.spacing(4)}>
             <ForgotPasswordForm redirectToLoginPage={redirectToLoginPage} />
-          </Grid>
+          </Box>
         </Grid>
-      </Container>
+      </Grid>
     </>
   );
 }

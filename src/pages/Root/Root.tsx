@@ -47,6 +47,7 @@ export function Root() {
           theme={{
             token: {
               colorBgBase: "#ffffff",
+              colorPrimary: "#05445E",
             },
             components: {
               Layout: {
@@ -62,7 +63,7 @@ export function Root() {
             },
           }}
         >
-          <Layout style={{ minHeight: "100vh" }}>
+          <Layout style={{ minHeight: "100vh", background: "white" }}>
             <SideBarComponent />
             <Content style={{ margin: "1rem 2rem 0rem 2rem" }}>
               <main>

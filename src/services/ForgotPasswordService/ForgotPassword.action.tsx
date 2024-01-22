@@ -1,5 +1,5 @@
-import { json, redirect } from "react-router-dom";
-import { baseURL } from "../../util/config/config";
+import { redirect } from "react-router-dom";
+import { baseURL } from "../../util";
 
 export async function forgotPasswordAction({ request }) {
   const data = await request.formData();
@@ -15,7 +15,7 @@ export async function forgotPasswordAction({ request }) {
     }
   );
   if (!response.ok) {
-    return json({ error: response.statusText }, response.status);
+    return response.json();
   }
   return redirect("/");
 }

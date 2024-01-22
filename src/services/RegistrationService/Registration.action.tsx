@@ -1,5 +1,5 @@
 import { json, redirect } from "react-router-dom";
-import { baseURL } from "../../util/config/config";
+import { baseURL } from "../../util/Config/config";
 
 export async function registrationAction({ request }) {
   const data = await request.formData();
