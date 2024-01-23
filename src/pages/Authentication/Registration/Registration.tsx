@@ -18,7 +18,7 @@ export function Registration() {
           <Typography variant="body1">
             Already have an account?{" "}
             <Link to="/" style={{ textDecoration: "none", color: "#05445E" }}>
-              <b>Log In</b>
+              <b>Login</b>
             </Link>
           </Typography>
           <Box marginTop={theme.spacing(4)}>

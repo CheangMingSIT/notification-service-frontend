@@ -7,3 +7,8 @@ export async function checkToken() {
   }
   return null;
 }
+
+export async function logoutLoader() {
+  localStorage.removeItem("token");
+  return redirect("/");
+}

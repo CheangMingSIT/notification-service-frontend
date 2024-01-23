@@ -62,7 +62,7 @@ export function LoginForm({ handleForgetPassword, incorrectPassword }) {
               fullWidth
               disableElevation
             >
-              Log In
+              Login
             </Button>
           </Box>
           <Box>

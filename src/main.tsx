@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+import { Result } from "antd";
 import {
   ForgotPassword,
   Login,
@@ -11,17 +12,26 @@ import {
 import { Overview } from "./pages/Overview";
 import { Records } from "./pages/Records";
 import { LoginRoot, Root } from "./pages/Root";
+import { SecurityRoot } from "./pages/Security";
 import {
   forgotPasswordAction,
   loginAction,
   registrationAction,
   resetPasswordAction,
 } from "./services";
+import { checkToken, logoutLoader } from "./util";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LoginRoot />,
+    errorElement: (
+      <Result
+        status="404"
+        title="404"
+        subTitle="Sorry, the page you visited does not exist."
+      />
+    ),
     children: [
       {
         index: true,
@@ -47,6 +57,7 @@ const router = createBrowserRouter([
   },
   {
     element: <Root />,
+    loader: checkToken,
     errorElement: <h1>404</h1>,
     children: [
       {
@@ -64,11 +75,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/Security",
-        element: <h3>Security</h3>,
+        element: <SecurityRoot />,
       },
       {
-        path: "/ApiKeys",
-        element: <h3>Api Keys</h3>,
+        path: "/Logout",
+        loader: logoutLoader,
       },
     ],
   },

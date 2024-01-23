@@ -10,7 +10,7 @@ export function Root() {
     palette: {
       primary: {
         main: "#05445E",
-        contrastText: "#AAC9CE",
+        contrastText: "#F3FEFF",
       },
     },
     typography: {
@@ -21,23 +21,52 @@ export function Root() {
         "Arial",
         "sans-serif",
       ].join(","),
-      body1: {
-        fontWeight: 500,
-      },
-      h3: {
+      h2: {
         fontWeight: 700,
         fontSize: "40px",
         color: "#404040",
       },
-      h4: {
-        fontWeight: 500,
-        fontSize: "24px",
+      h3: {
+        fontWeight: 700,
+      },
+      h6: {
+        fontWeight: 700,
       },
       body2: {
-        fontSize: "20px",
         fontWeight: 300,
       },
     },
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "10px",
+            },
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius: "10px",
+          },
+          text: {
+            "&:hover": {
+              backgroundColor: "transparent",
+            },
+          },
+        },
+      },
+      MuiSelect: {
+        styleOverrides: {
+          root: {
+            borderRadius: "10px",
+          },
+        },
+      },
+    },
+    spacing: 4,
   });
   return (
     <>
@@ -48,6 +77,15 @@ export function Root() {
             token: {
               colorBgBase: "#ffffff",
               colorPrimary: "#05445E",
+              colorPrimaryBg: "rgba(155, 155, 155, 0.10)",
+              colorBorder: "#E5E5E5",
+              fontFamily: [
+                "Inter",
+                "Roboto",
+                "Helvetica Neue",
+                "Arial",
+                "sans-serif",
+              ].join(","),
             },
             components: {
               Layout: {
@@ -65,7 +103,7 @@ export function Root() {
         >
           <Layout style={{ minHeight: "100vh", background: "white" }}>
             <SideBarComponent />
-            <Content style={{ margin: "1rem 2rem 0rem 2rem" }}>
+            <Content style={{ margin: "1rem 3rem 0rem 3rem" }}>
               <main>
                 <Outlet />
               </main>

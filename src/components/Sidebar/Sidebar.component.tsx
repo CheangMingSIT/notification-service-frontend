@@ -1,6 +1,7 @@
 import {
   BarChartOutlined,
   HomeOutlined,
+  LogoutOutlined,
   ProfileOutlined,
   SecurityScanOutlined,
 } from "@ant-design/icons";
@@ -37,6 +38,7 @@ export function SideBarComponent() {
       "4",
       <SecurityScanOutlined />
     ),
+    getItem(<Link to="./Logout">Logout</Link>, "5", <LogoutOutlined />),
   ];
 
   return (
