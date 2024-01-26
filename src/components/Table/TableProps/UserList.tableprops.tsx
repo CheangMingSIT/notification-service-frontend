@@ -1,14 +1,18 @@
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { IconButton } from "@mui/material";
-import { Space, TableProps } from "antd";
+import { TableProps } from "antd";
 
 export interface UserDataTypes {
+  UserId: number;
   Name: string;
   Role: string;
 }
 
 export const userListColumns: TableProps<UserDataTypes>["columns"] = [
+  {
+    title: "User ID",
+    dataIndex: "userId",
+    hidden: true,
+    key: "userId",
+  },
   {
     title: "Name",
     dataIndex: "Name",
@@ -19,20 +23,5 @@ export const userListColumns: TableProps<UserDataTypes>["columns"] = [
     dataIndex: "Role",
     align: "center",
     key: "Role",
-  },
-  {
-    title: "Actions",
-    key: "Action",
-    align: "center",
-    render: (_) => (
-      <Space size="small">
-        <IconButton sx={{ color: "rgba(34, 34, 34, 1)" }} size="small">
-          <EditOutlinedIcon />
-        </IconButton>
-        <IconButton sx={{ color: "black" }} size="small">
-          <DeleteOutlineOutlinedIcon />
-        </IconButton>
-      </Space>
-    ),
   },
 ];

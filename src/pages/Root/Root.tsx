@@ -12,6 +12,12 @@ export function Root() {
         main: "#05445E",
         contrastText: "#F3FEFF",
       },
+      secondary: {
+        main: "#004969",
+      },
+      info: {
+        main: "#A9A9A9",
+      },
     },
     typography: {
       fontFamily: [
@@ -21,18 +27,32 @@ export function Root() {
         "Arial",
         "sans-serif",
       ].join(","),
+      fontSize: 14,
       h2: {
         fontWeight: 700,
-        fontSize: "40px",
         color: "#404040",
+        fontSize: "45px",
       },
       h3: {
         fontWeight: 700,
+        fontSize: "38px",
+      },
+      h4: {
+        fontWeight: 700,
+        fontSize: "30px",
+      },
+      h5: {
+        fontWeight: 700,
+        fontSize: "24px",
       },
       h6: {
         fontWeight: 700,
+        fontSize: "20px",
       },
-      body2: {
+      body1: {
+        fontWeight: 400,
+      },
+      subtitle1: {
         fontWeight: 300,
       },
     },

@@ -17,7 +17,6 @@ export const roleListColumn: TableProps<RoleListDataTypes>["columns"] = [
   {
     title: "Role",
     dataIndex: "Role",
-    align: "center",
     key: "Role",
   },
   {

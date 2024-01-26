@@ -9,11 +9,11 @@ export function Overview() {
         <Typography variant="h2">Overview</Typography>
       </Row>
       <Row style={{ marginTop: "2rem" }}>
-        <Typography variant="h5">Today's Stats</Typography>
+        <Typography variant="h6">Today's Stats</Typography>
       </Row>
       <Stats />
       <Row style={{ marginTop: "2rem" }}>
-        <Typography variant="h5">Dashboard</Typography>
+        <Typography variant="h6">Dashboard</Typography>
       </Row>
     </>
   );

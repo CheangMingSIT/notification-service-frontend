@@ -1,31 +1,29 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { Tabs, TabsProps } from "antd";
-import { PermissionSecurity, RoleSecurity, UserSecurity } from "..";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export function SecurityRoot() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const onChange = (key: string) => {
-    console.log(key);
+    navigate(key);
   };
   const items: TabsProps["items"] = [
     {
-      key: "1",
+      key: "/Security/Users",
       label: "Users",
-      children: <UserSecurity />,
     },
     {
-      key: "2",
+      key: "/Security/Roles",
       label: "Roles",
-      children: <RoleSecurity />,
     },
     {
-      key: "3",
+      key: "/Security/Permissions",
       label: "Permissions",
-      children: <PermissionSecurity />,
     },
     {
-      key: "4",
+      key: "/Security/ApiKeys",
       label: "Api Keys",
-      children: "Content of Tab Pane 4",
     },
   ];
   const theme = useTheme();
@@ -33,7 +31,8 @@ export function SecurityRoot() {
     <>
       <Typography variant="h2">Security</Typography>
       <Box marginTop={theme.spacing(8)}>
-        <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+        <Tabs activeKey={location.pathname} items={items} onChange={onChange} />
+        <Outlet />
       </Box>
     </>
   );

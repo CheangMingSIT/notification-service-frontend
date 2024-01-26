@@ -12,7 +12,15 @@ import {
 import { Overview } from "./pages/Overview";
 import { Records } from "./pages/Records";
 import { LoginRoot, Root } from "./pages/Root";
-import { SecurityRoot } from "./pages/Security";
+import {
+  AddPermission,
+  ApiKeySecurity,
+  PermissionSecurity,
+  RoleSecurity,
+  SecurityRoot,
+  UserEditSecurity,
+  UserSecurity,
+} from "./pages/Security";
 import {
   forgotPasswordAction,
   loginAction,
@@ -76,6 +84,43 @@ const router = createBrowserRouter([
       {
         path: "/Security",
         element: <SecurityRoot />,
+        children: [
+          {
+            path: "Users",
+            id: "security-users",
+            element: <UserSecurity />,
+          },
+          {
+            path: "Roles",
+            element: <RoleSecurity />,
+          },
+          {
+            path: "Permissions",
+            element: <PermissionSecurity />,
+          },
+          {
+            path: "ApiKeys",
+            element: <ApiKeySecurity />,
+          },
+        ],
+      },
+      {
+        path: "/Security/Users/:userId",
+        children: [
+          {
+            path: "Edit",
+            element: <UserEditSecurity />,
+          },
+        ],
+      },
+      {
+        path: "Security/Permissions",
+        children: [
+          {
+            path: "Add",
+            element: <AddPermission />,
+          },
+        ],
       },
       {
         path: "/Logout",

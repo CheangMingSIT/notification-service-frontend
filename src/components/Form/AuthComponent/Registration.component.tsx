@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useContext } from "react";
 import { Form } from "react-router-dom";
-import { PasswordValidationContext } from "../../util";
+import { PasswordValidationContext } from "../../../util";
 
 export function RegistrationForm({}) {
   const theme = useTheme();

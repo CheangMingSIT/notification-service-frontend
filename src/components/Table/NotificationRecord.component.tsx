@@ -69,27 +69,27 @@ export function NotificationRecord() {
       >
         <Stack spacing={theme.spacing(6)}>
           <Box>
-            <Typography variant="body2">Recipient</Typography>
+            <Typography variant="subtitle1">Recipient</Typography>
             <Typography variant="h6">{selectedRowData?.Recipient}</Typography>
           </Box>
           <Box>
-            <Typography variant="body2">Channel</Typography>
+            <Typography variant="subtitle1">Channel</Typography>
             <Typography variant="h6">{selectedRowData?.Channel}</Typography>
           </Box>
           <Box>
-            <Typography variant="body2">Status</Typography>
+            <Typography variant="subtitle1">Status</Typography>
             <Typography variant="h6">{selectedRowData?.Status}</Typography>
           </Box>
           <Box>
-            <Typography variant="body2">Date</Typography>
+            <Typography variant="subtitle1">Date</Typography>
             <Typography variant="h6">{selectedRowData?.Date}</Typography>
           </Box>
           <Box>
-            <Typography variant="body2">Subject</Typography>
+            <Typography variant="subtitle1">Subject</Typography>
             <Typography variant="h6">Lorem ipsum dolor sit amet</Typography>
           </Box>
           <Box>
-            <Typography variant="body2">Message</Typography>
+            <Typography variant="subtitle1">Message</Typography>
             <Typography
               variant="body1"
               sx={{ fontWeight: 500 }}

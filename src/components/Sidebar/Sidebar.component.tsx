@@ -34,7 +34,7 @@ export function SideBarComponent() {
     ),
     getItem(<Link to="./Analytics">Analytics</Link>, "3", <BarChartOutlined />),
     getItem(
-      <Link to="./Security">Security</Link>,
+      <Link to="./Security/Users">Security</Link>,
       "4",
       <SecurityScanOutlined />
     ),

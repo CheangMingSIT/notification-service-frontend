@@ -14,84 +14,57 @@ export function Stats() {
           },
         }}
       >
-        <Row gutter={[{ xs: 4, sm: 8, md: 16, lg: 24 }, 2]}>
-          <Col
-            className="gutter-row"
-            xs={24}
-            lg={12}
-            xl={8}
-            style={{ marginTop: "1rem" }}
-          >
+        <Row
+          gutter={[{ xs: 4, sm: 8, md: 16, lg: 25 }, 20]}
+          style={{ marginTop: "1rem" }}
+        >
+          <Col xs={24} lg={12} xl={8}>
             <Card>
               <Row>
-                <Typography variant="body2">Total Sent Request</Typography>
+                <Typography variant="subtitle1">Total Sent Request</Typography>
               </Row>
               <Row>
-                <Typography variant="h3">128</Typography>
+                <Typography variant="h2">128</Typography>
               </Row>
             </Card>
           </Col>
-          <Col
-            className="gutter-row"
-            xs={24}
-            lg={12}
-            xl={8}
-            style={{ marginTop: "1rem" }}
-          >
+          <Col xs={24} lg={12} xl={8}>
             <Card>
               <Row>
-                <Typography variant="body2">Message In Queue</Typography>
+                <Typography variant="subtitle1">Message In Queue</Typography>
               </Row>
               <Row>
-                <Typography variant="h3">12</Typography>
+                <Typography variant="h2">12</Typography>
               </Row>
             </Card>
           </Col>
-          <Col
-            className="gutter-row"
-            xs={24}
-            lg={12}
-            xl={8}
-            style={{ marginTop: "1rem" }}
-          >
+          <Col xs={24} lg={12} xl={8}>
             <Card>
               <Row>
-                <Typography variant="body2">Undelivered Message</Typography>
+                <Typography variant="subtitle1">Undelivered Message</Typography>
               </Row>
               <Row>
-                <Typography variant="h3">5</Typography>
+                <Typography variant="h2">5</Typography>
               </Row>
             </Card>
           </Col>
-          <Col
-            className="gutter-row"
-            xs={24}
-            lg={12}
-            xl={8}
-            style={{ marginTop: "1rem" }}
-          >
+          <Col xs={24} lg={12} xl={8}>
             <Card>
               <Row>
-                <Typography variant="body2">MongoDB</Typography>
+                <Typography variant="subtitle1">MongoDB</Typography>
               </Row>
               <Row>
-                <Typography variant="h3">Up</Typography>
+                <Typography variant="h2">Up</Typography>
               </Row>
             </Card>
           </Col>
-          <Col
-            className="gutter-row"
-            xs={24}
-            lg={12}
-            xl={8}
-            style={{ marginTop: "1rem" }}
-          >
+          <Col xs={24} lg={12} xl={8}>
             <Card>
               <Row>
-                <Typography variant="body2">PostgresDB</Typography>
+                <Typography variant="subtitle1">PostgresDB</Typography>
               </Row>
               <Row>
-                <Typography variant="h3">Up</Typography>
+                <Typography variant="h2">Up</Typography>
               </Row>
             </Card>
           </Col>
