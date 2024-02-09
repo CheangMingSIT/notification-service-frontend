@@ -42,11 +42,11 @@ export function Root() {
         fontSize: "30px",
       },
       h5: {
-        fontWeight: 700,
+        fontWeight: 600,
         fontSize: "24px",
       },
       h6: {
-        fontWeight: 700,
+        fontWeight: 600,
         fontSize: "20px",
       },
       body1: {
@@ -123,7 +123,7 @@ export function Root() {
         >
           <Layout style={{ minHeight: "100vh", background: "white" }}>
             <SideBarComponent />
-            <Content style={{ margin: "1rem 3rem 0rem 3rem" }}>
+            <Content style={{ margin: "1rem 2rem 0rem 2rem" }}>
               <main>
                 <Outlet />
               </main>

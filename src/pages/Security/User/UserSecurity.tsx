@@ -1,5 +1,4 @@
-import { Search } from "@mui/icons-material";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { BlockOutlined, Search } from "@mui/icons-material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import {
   FormControl,
@@ -13,44 +12,24 @@ import {
   TextField,
   useTheme,
 } from "@mui/material";
-import { Col, Row } from "antd";
+import { Col, Row, Space } from "antd";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  DeleteModal,
-  Record,
-  UserDataTypes,
-  userListColumns,
-} from "../../../components";
+import { Link, useLoaderData } from "react-router-dom";
+import { DeleteModal, Record, userListColumns } from "../../../components";
 
-const userData: UserDataTypes[] = [
-  {
-    UserId: 1,
-    Name: "John Brown",
-    Role: "Admin",
-  },
-  {
-    UserId: 2,
-    Name: "Jim Green",
-    Role: "User",
-  },
-  {
-    UserId: 3,
-    Name: "Joe Black",
-    Role: "User",
-  },
-  {
-    UserId: 4,
-    Name: "Jim Red",
-    Role: "User",
-  },
-];
-
+type UserSecurityLoaderData = {
+  data: {
+    userId: string;
+    name: string;
+    email: string;
+    role: string;
+  }[];
+};
 export function UserSecurity() {
   const theme = useTheme();
+  const data = useLoaderData() as UserSecurityLoaderData;
   const [role, setRole] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
-
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
   const handleChangeRole = (e: SelectChangeEvent) => {
@@ -69,7 +48,7 @@ export function UserSecurity() {
             }}
           >
             <TextField
-              id="SearchUser"
+              id="search-user"
               placeholder="Search User"
               variant="outlined"
               size="small"
@@ -83,12 +62,13 @@ export function UserSecurity() {
               sx={{ width: { sm: "100%", md: "20rem" } }}
             />
             <FormControl
+              id="role"
               sx={{
                 marginLeft: theme.spacing(2),
                 width: { sm: "100%", md: "10rem" },
               }}
             >
-              <InputLabel htmlFor="role" id="role" size="small">
+              <InputLabel id="role" size="small">
                 Role
               </InputLabel>
               <Select
@@ -99,8 +79,13 @@ export function UserSecurity() {
                 onChange={handleChangeRole}
                 size="small"
               >
-                <MenuItem value="admin">Admin</MenuItem>
-                <MenuItem value="user">User</MenuItem>
+                {[...new Set(data?.data.map((user) => user.role))].map(
+                  (role) => (
+                    <MenuItem key={role} value={role}>
+                      {role}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
           </Stack>
@@ -114,28 +99,29 @@ export function UserSecurity() {
               {
                 title: "Actions",
                 key: "Action",
-                align: "center",
+                width: 150,
                 render: (_, record) => (
-                  <Stack spacing={2} direction="row" justifyContent="center">
+                  <Space size="middle">
                     <IconButton
                       size="small"
                       component={Link}
                       to={`/Security/Users/${record.UserId}/Edit`}
                     >
-                      <EditOutlinedIcon />
+                      <EditOutlinedIcon sx={{ color: "#888888" }} />
                     </IconButton>
                     <IconButton
                       size="small"
                       onClick={handleOpenDelete}
                       color="error"
                     >
-                      <DeleteOutlineOutlinedIcon />
+                      <BlockOutlined />
                     </IconButton>
-                  </Stack>
+                  </Space>
                 ),
               },
             ]}
-            data={userData}
+            data={data?.data}
+            rowKey={(record) => record.userId}
           />
         </Col>
       </Row>

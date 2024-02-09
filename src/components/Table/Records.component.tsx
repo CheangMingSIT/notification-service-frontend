@@ -1,10 +1,10 @@
 import { Table } from "antd";
 
-export function Record({ columns, data }) {
+export function Record({ columns, data, rowKey }) {
   return (
     <>
       <Table
-        rowKey={(record) => record.UserId}
+        rowKey={rowKey}
         columns={columns}
         dataSource={data}
         pagination={{ showSizeChanger: true }}

@@ -1,42 +1,15 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
-import { Drawer, Table } from "antd";
+import { Table } from "antd";
 import { useState } from "react";
+import { useNavigation } from "react-router-dom";
 import { NotificationRecordColumn, NotificationRecordDataTypes } from "..";
+import RecordDrawer from "../Drawer/Recorddrawer.component";
 
-const data: NotificationRecordDataTypes[] = [
-  {
-    key: "1",
-    Recipient: "John Brown",
-    Channel: "Email",
-    Status: "Success",
-    Date: "2024-01-01",
-  },
-  {
-    key: "2",
-    Recipient: "Jim Green",
-    Channel: "SMS",
-    Status: "Fail",
-    Date: "2024-02-01",
-  },
-  {
-    key: "3",
-    Recipient: "Joe Black",
-    Channel: "Email",
-    Status: "Queuing",
-    Date: "2024-03-01",
-  },
-  {
-    key: "4",
-    Recipient: "Jim Red",
-    Channel: "SMS",
-    Status: "Success",
-    Date: "2024-04-01",
-  },
-];
+export function NotificationRecord({ logs }) {
+  const navigation = useNavigation();
 
-export function NotificationRecord() {
-  const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [selectedRowData, setSelectedRowData] =
     useState<NotificationRecordDataTypes | null>(null);
   const showDrawer = (record) => {
@@ -46,69 +19,43 @@ export function NotificationRecord() {
   const onClose = () => {
     setOpen(false);
   };
-
   return (
     <>
       <Table
         columns={NotificationRecordColumn}
-        dataSource={data}
-        onRow={(record) => {
-          return {
-            style: { cursor: "pointer" },
-            onClick: () => showDrawer(record),
-          };
+        dataSource={logs.map((log, index) => ({
+          key: index,
+          id: log.id,
+          userId: log.userId,
+          secretKey:
+            log.secretKey.slice(0, 8) + "..." + log.secretKey.slice(-8),
+          channel: log.channel,
+          status: log.status,
+          subject: log.subject,
+          message: log.message,
+          scheduleDate: new Date(log.scheduleDate).toLocaleDateString("en-UK"),
+        }))}
+        loading={navigation.state === "loading" ? true : false}
+        onRow={(record) => ({
+          style: { cursor: "pointer" },
+          onClick: () => showDrawer(record),
+        })}
+        pagination={{
+          showSizeChanger: true,
+          total: logs.length,
+          pageSize: pageSize,
+          current: page,
+          onChange: (page, pageSize) => {
+            setPage(page);
+            setPageSize(pageSize);
+          },
         }}
-        pagination={{ showSizeChanger: true }}
       />
-      <Drawer
-        title="More Info"
-        placement="right"
+      <RecordDrawer
         open={open}
         onClose={onClose}
-        size="large"
-      >
-        <Stack spacing={theme.spacing(6)}>
-          <Box>
-            <Typography variant="subtitle1">Recipient</Typography>
-            <Typography variant="h6">{selectedRowData?.Recipient}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1">Channel</Typography>
-            <Typography variant="h6">{selectedRowData?.Channel}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1">Status</Typography>
-            <Typography variant="h6">{selectedRowData?.Status}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1">Date</Typography>
-            <Typography variant="h6">{selectedRowData?.Date}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1">Subject</Typography>
-            <Typography variant="h6">Lorem ipsum dolor sit amet</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle1">Message</Typography>
-            <Typography
-              variant="body1"
-              sx={{ fontWeight: 500 }}
-              align="justify"
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-              voluptates, quia, quod, nemo voluptate fugit quas voluptatum
-              dolorum voluptatibus quibusdam asperiores. Quisquam voluptates,
-              quia, quod, nemo voluptate fugit quas voluptatum dolorum
-              voluptatibus quibusdam asperiores. Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Quisquam voluptates, quia, quod,
-              nemo voluptate fugit quas voluptatum dolorum voluptatibus
-              quibusdam asperiores. Quisquam voluptates, quia, quod, nemo
-              voluptate fugit quas voluptatum dolorum voluptatibus quibusdam
-              asperiores.
-            </Typography>
-          </Box>
-        </Stack>
-      </Drawer>
+        selectedRowData={selectedRowData}
+      />
     </>
   );
 }

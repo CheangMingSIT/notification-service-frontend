@@ -25,10 +25,10 @@ export const roleListColumn: TableProps<RoleListDataTypes>["columns"] = [
     align: "center",
     render: (_) => (
       <Space size="small">
-        <IconButton sx={{ color: "rgba(34, 34, 34, 1)" }} size="small">
+        <IconButton size="small">
           <EditOutlinedIcon />
         </IconButton>
-        <IconButton sx={{ color: "black" }} size="small">
+        <IconButton color="error" size="small">
           <DeleteOutlineOutlinedIcon />
         </IconButton>
       </Space>

@@ -26,6 +26,8 @@ import {
   loginAction,
   registrationAction,
   resetPasswordAction,
+  searchLogsLoader,
+  userListLoader,
 } from "./services";
 import { checkToken, logoutLoader } from "./util";
 
@@ -66,7 +68,6 @@ const router = createBrowserRouter([
   {
     element: <Root />,
     loader: checkToken,
-    errorElement: <h1>404</h1>,
     children: [
       {
         path: "/Overview",
@@ -76,6 +77,7 @@ const router = createBrowserRouter([
       {
         path: "/NotificationRecords",
         element: <Records />,
+        loader: searchLogsLoader,
       },
       {
         path: "/Analytics",
@@ -87,8 +89,9 @@ const router = createBrowserRouter([
         children: [
           {
             path: "Users",
-            id: "security-users",
+            id: "users",
             element: <UserSecurity />,
+            loader: userListLoader,
           },
           {
             path: "Roles",

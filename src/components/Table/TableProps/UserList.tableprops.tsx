@@ -15,13 +15,12 @@ export const userListColumns: TableProps<UserDataTypes>["columns"] = [
   },
   {
     title: "Name",
-    dataIndex: "Name",
-    key: "Name",
+    dataIndex: "name",
+    key: "name",
   },
   {
     title: "Role",
-    dataIndex: "Role",
-    align: "center",
-    key: "Role",
+    dataIndex: "role",
+    key: "role",
   },
 ];

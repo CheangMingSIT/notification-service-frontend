@@ -29,7 +29,7 @@ export const PermissionListColumn: TableProps<PermissionListDataTypes>["columns"
       key: "Action",
       align: "center",
       render: (_) => (
-        <IconButton sx={{ color: "black" }} size="small">
+        <IconButton color="error" size="small">
           <DeleteOutlineOutlinedIcon />
         </IconButton>
       ),

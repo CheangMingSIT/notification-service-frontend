@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import { baseURL } from "../../util/Config/config";
+import { userURL } from "../../util";
 
 export async function loginAction({ request }) {
   const data = await request.formData();
@@ -8,14 +8,13 @@ export async function loginAction({ request }) {
     password: data.get("password"),
   };
 
-  const response = await fetch(`${baseURL}/v1/api/notification-system/signIn`, {
+  const response = await fetch(`${userURL}/v1/api/notification-system/signIn`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(loginData),
   });
-
   if (!response.ok) {
     return response.json();
   }

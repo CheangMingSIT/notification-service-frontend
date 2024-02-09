@@ -1,5 +1,5 @@
 import { json, redirect } from "react-router-dom";
-import { baseURL } from "../../util/Config/config";
+import { userURL } from "../../util/Config/config";
 
 export async function registrationAction({ request }) {
   const data = await request.formData();
@@ -11,7 +11,7 @@ export async function registrationAction({ request }) {
   if (password !== confirmPassword) {
     return json({ error: "Password does not match" }, 400);
   }
-  const response = await fetch(`${baseURL}/v1/api/notification-system/signUp`, {
+  const response = await fetch(`${userURL}/v1/api/notification-system/signUp`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

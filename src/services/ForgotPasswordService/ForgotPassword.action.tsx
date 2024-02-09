@@ -1,11 +1,11 @@
 import { redirect } from "react-router-dom";
-import { baseURL } from "../../util";
+import { userURL } from "../../util";
 
 export async function forgotPasswordAction({ request }) {
   const data = await request.formData();
   const email = data.get("email");
   const response = await fetch(
-    `${baseURL}/v1/api/notification-system/forgotPassword`,
+    `${userURL}/v1/api/notification-system/forgotPassword`,
     {
       method: "POST",
       headers: {
