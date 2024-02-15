@@ -15,14 +15,13 @@ export const PermissionListColumn: TableProps<PermissionListDataTypes>["columns"
     },
     {
       title: "Operation",
-      dataIndex: "Operation",
-      key: "Operation",
+      dataIndex: "operation",
+      key: "operation",
     },
     {
       title: "Subject",
-      dataIndex: "Subject",
-      align: "center",
-      key: "Subject",
+      dataIndex: "subject",
+      key: "subject",
     },
     {
       title: "Actions",

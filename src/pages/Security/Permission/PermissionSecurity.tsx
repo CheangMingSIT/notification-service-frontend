@@ -10,47 +10,50 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Form, Link, useLoaderData, useSubmit } from "react-router-dom";
 import { StyledButton } from "../../../assets/style";
-import {
-  PermissionListColumn,
-  PermissionListDataTypes,
-  Record,
-} from "../../../components";
+import { PermissionListColumn, Record } from "../../../components";
 
-const permissionData: PermissionListDataTypes[] = [
-  {
-    No: 1,
-    Operation: "Create",
-    Subject: "User",
-  },
-  {
-    No: 2,
-    Operation: "Read",
-    Subject: "User",
-  },
-  {
-    No: 3,
-    Operation: "Update",
-    Subject: "User",
-  },
-  {
-    No: 4,
-    Operation: "Delete",
-    Subject: "User",
-  },
-];
+type PermissionDataTypes = {
+  data: { action: string; subject: string }[];
+};
 
 export function PermissionSecurity() {
   const theme = useTheme();
+  const data = useLoaderData() as PermissionDataTypes;
+  const submit = useSubmit();
+
+  const url = new URL(window.location.href);
+  const searchParams = url.searchParams;
+
   const [operation, setOperation] = useState("");
   const [Subject, setSubject] = useState("");
-  const handleChangeOperation = (e: SelectChangeEvent) => {
-    setOperation(e.target.value);
+
+  const handleChangeOperation = (event: SelectChangeEvent) => {
+    setOperation(event.target.value);
+    searchParams.delete("operation");
+    if (event.target.value) {
+      searchParams.append("operation", event.target.value);
+    }
+    const modifiedSearchParams = searchParams.toString();
+    submit(modifiedSearchParams);
   };
   const handleChangeSubject = (e: SelectChangeEvent) => {
     setSubject(e.target.value);
+    searchParams.delete("subject");
+    if (e.target.value) {
+      searchParams.append("subject", e.target.value);
+    }
+    const modifiedSearchParams = searchParams.toString();
+    submit(modifiedSearchParams);
   };
+  const permissionData = data.data.map((item, index) => {
+    return {
+      No: index + 1,
+      operation: item.action,
+      subject: item.subject,
+    };
+  });
 
   return (
     <>
@@ -60,54 +63,81 @@ export function PermissionSecurity() {
         justifyContent="space-between"
       >
         <Box>
-          <Stack
-            direction={{ sm: "column", md: "row", lg: "row" }}
-            spacing={{
-              xs: theme.spacing(4),
-              sm: theme.spacing(2),
-              md: theme.spacing(4),
-            }}
-          >
-            <FormControl
-              sx={{ width: { sm: "100%", md: "10rem%", lg: "12rem" } }}
+          <Form role="search" method="GET">
+            <Stack
+              direction={{ sm: "column", md: "row", lg: "row" }}
+              spacing={{
+                xs: theme.spacing(4),
+                sm: theme.spacing(2),
+                md: theme.spacing(4),
+              }}
             >
-              <InputLabel htmlFor="Operation" id="Operation" size="small">
-                Operation
-              </InputLabel>
-              <Select
-                labelId="Operation"
-                id="Operation"
-                label="Operation"
-                size="small"
-                value={operation}
-                onChange={handleChangeOperation}
+              <FormControl
+                id="operation"
+                sx={{ width: { sm: "100%", md: "10rem%", lg: "12rem" } }}
               >
-                <MenuItem value="Create">Create</MenuItem>
-                <MenuItem value="Read">Read</MenuItem>
-                <MenuItem value="Update">Update</MenuItem>
-                <MenuItem value="Delete">Delete</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl
-              sx={{ width: { sm: "100%", md: "12rem%", lg: "14rem" } }}
-            >
-              <InputLabel htmlFor="Subject" id="Subject" size="small">
-                Subject
-              </InputLabel>
-              <Select
-                labelId="Subject"
-                id="Subject"
-                size="small"
-                value={Subject}
-                onChange={handleChangeSubject}
-                label="Subject"
+                <InputLabel id="operation" size="small">
+                  Operation
+                </InputLabel>
+                <Select
+                  labelId="operation"
+                  id="operation"
+                  label="Operation"
+                  size="small"
+                  value={operation}
+                  onChange={handleChangeOperation}
+                >
+                  <MenuItem key="manage" value="manage">
+                    Manage
+                  </MenuItem>
+                  <MenuItem key="create" value="create">
+                    Create
+                  </MenuItem>
+                  <MenuItem key="read" value="read">
+                    Read
+                  </MenuItem>
+                  <MenuItem key="update" value="update">
+                    Update
+                  </MenuItem>
+                  <MenuItem key="delete" value="delete">
+                    Delete
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl
+                sx={{ width: { sm: "100%", md: "12rem%", lg: "14rem" } }}
               >
-                <MenuItem value="User">Users</MenuItem>
-                <MenuItem value="ApiKey">ApiKey</MenuItem>
-                <MenuItem value="Notification Log">Notification Log</MenuItem>
-              </Select>
-            </FormControl>
-          </Stack>
+                <InputLabel htmlFor="Subject" id="Subject" size="small">
+                  Subject
+                </InputLabel>
+                <Select
+                  labelId="Subject"
+                  id="Subject"
+                  size="small"
+                  defaultValue=""
+                  value={Subject}
+                  onChange={handleChangeSubject}
+                  label="Subject"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem key="all" value="all">
+                    All
+                  </MenuItem>
+                  <MenuItem key="User" value="User">
+                    Users
+                  </MenuItem>
+                  <MenuItem key="ApiKey" value="ApiKey">
+                    ApiKey
+                  </MenuItem>
+                  <MenuItem key="NotificationRecord" value="NotificationRecord">
+                    Notification Record
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Stack>
+          </Form>
         </Box>
 
         <Box>
@@ -116,7 +146,7 @@ export function PermissionSecurity() {
             disableElevation
             startIcon={<AddIcon />}
             component={Link}
-            to="/Security/Permissions/Add"
+            to="/Security/Permissions/Create"
             sx={{ width: { xs: "100%", sm: "100%", md: "100%" } }}
           >
             Generate new permission
@@ -124,7 +154,11 @@ export function PermissionSecurity() {
         </Box>
       </Stack>
       <Box marginTop={theme.spacing(4)}>
-        <Record columns={PermissionListColumn} data={permissionData} />
+        <Record
+          columns={PermissionListColumn}
+          data={permissionData}
+          rowKey={(permissions) => permissions.No}
+        />
       </Box>
     </>
   );

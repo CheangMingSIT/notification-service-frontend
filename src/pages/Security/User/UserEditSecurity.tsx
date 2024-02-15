@@ -1,13 +1,13 @@
 import { useRouteLoaderData } from "react-router-dom";
 import { EditUser, FormContainer } from "../../../components";
+import { UserSecurityLoaderData } from "../../../util";
 
 export function UserEditSecurity() {
-  const user = useRouteLoaderData("users");
-  console.log(user);
+  const { data } = useRouteLoaderData("user-id") as UserSecurityLoaderData;
   return (
     <>
       <FormContainer Header={"User"} Subtitle={"Edit User"} Linkname={"Users"}>
-        <EditUser />
+        <EditUser user={data} />
       </FormContainer>
     </>
   );

@@ -8,7 +8,7 @@ const PasswordValidationContext = createContext({
   handleConfirmPasswordChange: (_event) => {},
 });
 
-const PasswordValidationProvider = ({ children }) => {
+const ValidatePasswords = ({ children }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
@@ -44,4 +44,4 @@ const PasswordValidationProvider = ({ children }) => {
   );
 };
 
-export { PasswordValidationContext, PasswordValidationProvider };
+export { PasswordValidationContext, ValidatePasswords };

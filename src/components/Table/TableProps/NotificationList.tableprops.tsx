@@ -24,26 +24,26 @@ export const NotificationRecordColumn: TableProps<NotificationRecordDataTypes>["
       title: "Notification ID",
       dataIndex: "id",
       key: "id",
-      width: 500,
       ellipsis: true,
     },
     {
       title: "Secret Key",
       dataIndex: "secretKey",
       key: "secretKey",
-      width: 500,
+      responsive: ["sm"],
+      ellipsis: true,
     },
     {
       title: "Channel",
       dataIndex: "channel",
       key: "channel",
-      width: 200,
+      responsive: ["lg"],
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width: 200,
+      responsive: ["lg"],
       render: (status) => {
         if (status === "SUCCESS") {
           return (
@@ -80,6 +80,7 @@ export const NotificationRecordColumn: TableProps<NotificationRecordDataTypes>["
       title: "Date",
       dataIndex: "scheduleDate",
       key: "scheduleDate",
+      responsive: ["sm"],
       width: 300,
       sorter: (a, b) => a.scheduleDate.localeCompare(b.scheduleDate),
       defaultSortOrder: "ascend",

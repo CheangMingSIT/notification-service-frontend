@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { RegistrationForm } from "../../../components";
-import { PasswordValidationProvider } from "../../../util";
+import { ValidatePasswords } from "../../../util";
 
 export function Registration() {
   const theme = useTheme();
@@ -22,9 +22,9 @@ export function Registration() {
             </Link>
           </Typography>
           <Box marginTop={theme.spacing(4)}>
-            <PasswordValidationProvider>
+            <ValidatePasswords>
               <RegistrationForm />
-            </PasswordValidationProvider>
+            </ValidatePasswords>
           </Box>
         </Grid>
       </Grid>

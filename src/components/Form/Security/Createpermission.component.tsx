@@ -9,14 +9,14 @@ import {
   useTheme,
 } from "@mui/material";
 import { Col, Row } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { StyledDropDown, StyledTextField } from "../../../assets/style";
 export function CreatePermission() {
   const theme = useTheme();
   const navigate = useNavigate();
   return (
     <>
-      <form>
+      <Form method="POST" role="form">
         <Row gutter={[20, 24]}>
           <Col xs={24} sm={24} md={12}>
             <FormControl variant="filled" fullWidth>
@@ -24,18 +24,36 @@ export function CreatePermission() {
               <Select
                 id="customized-select-role"
                 labelId="customized-select-role"
+                name="operation"
+                required
                 input={<StyledDropDown />}
-                defaultValue={"Create"}
+                defaultValue="create"
               >
-                <MenuItem value={"Create"}>Create</MenuItem>
-                <MenuItem value={"Read"}>Read</MenuItem>
-                <MenuItem value={"Update"}>Update</MenuItem>
-                <MenuItem value={"Delete"}>Delete</MenuItem>
+                <MenuItem key="create" value="create">
+                  Create
+                </MenuItem>
+                <MenuItem key="read" value="read">
+                  Read
+                </MenuItem>
+                <MenuItem key="update" value="update">
+                  Update
+                </MenuItem>
+                <MenuItem key="delete" value="delete">
+                  Delete
+                </MenuItem>
               </Select>
             </FormControl>
           </Col>
           <Col xs={24} sm={24} md={12}>
-            <StyledTextField label="Subject" variant="filled" fullWidth />
+            <StyledTextField
+              label="Subject"
+              variant="filled"
+              autoComplete="off"
+              required
+              type="text"
+              name="subject"
+              fullWidth
+            />
           </Col>
         </Row>
         <Row justify={"end"}>
@@ -57,7 +75,7 @@ export function CreatePermission() {
             </Stack>
           </Box>
         </Row>
-      </form>
+      </Form>
     </>
   );
 }

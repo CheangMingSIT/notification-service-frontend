@@ -1,8 +1,7 @@
+import { Result } from "antd";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-
-import { Result } from "antd";
 import {
   ForgotPassword,
   Login,
@@ -22,10 +21,15 @@ import {
   UserSecurity,
 } from "./pages/Security";
 import {
+  GetUserLoader,
+  UpdateUserAction,
+  createPermissionAction,
   forgotPasswordAction,
   loginAction,
+  permissionListLoader,
   registrationAction,
   resetPasswordAction,
+  roleListLoader,
   searchLogsLoader,
   userListLoader,
 } from "./services";
@@ -89,17 +93,18 @@ const router = createBrowserRouter([
         children: [
           {
             path: "Users",
-            id: "users",
             element: <UserSecurity />,
             loader: userListLoader,
           },
           {
             path: "Roles",
             element: <RoleSecurity />,
+            loader: roleListLoader,
           },
           {
             path: "Permissions",
             element: <PermissionSecurity />,
+            loader: permissionListLoader,
           },
           {
             path: "ApiKeys",
@@ -109,21 +114,20 @@ const router = createBrowserRouter([
       },
       {
         path: "/Security/Users/:userId",
+        id: "user-id",
+        loader: GetUserLoader,
         children: [
           {
-            path: "Edit",
+            path: "edit",
             element: <UserEditSecurity />,
+            action: UpdateUserAction,
           },
         ],
       },
       {
-        path: "Security/Permissions",
-        children: [
-          {
-            path: "Add",
-            element: <AddPermission />,
-          },
-        ],
+        path: "/Security/Permissions/Create",
+        element: <AddPermission />,
+        action: createPermissionAction,
       },
       {
         path: "/Logout",

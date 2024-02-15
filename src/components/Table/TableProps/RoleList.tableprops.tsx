@@ -11,13 +11,13 @@ export interface RoleListDataTypes {
 export const roleListColumn: TableProps<RoleListDataTypes>["columns"] = [
   {
     title: "No.",
-    dataIndex: "No",
-    key: "No",
+    dataIndex: "no",
+    key: "no",
   },
   {
     title: "Role",
-    dataIndex: "Role",
-    key: "Role",
+    dataIndex: "role",
+    key: "role",
   },
   {
     title: "Actions",

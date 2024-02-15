@@ -9,28 +9,35 @@ import {
   useTheme,
 } from "@mui/material";
 import { Col, Row } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { StyledDropDown, StyledTextField } from "../../../assets/style";
-export function EditUser() {
+export function EditUser({ user }) {
   const theme = useTheme();
   const navigate = useNavigate();
+
   return (
     <>
-      <form>
+      <Form method="PATCH">
         <Row gutter={[20, 24]}>
           <Col xs={24} sm={24} md={12}>
             <StyledTextField
               label="Name"
+              type="text"
+              name="name"
               variant="filled"
-              defaultValue={"SPTEL"}
+              disabled
+              defaultValue={user.name}
               fullWidth
             />
           </Col>
           <Col xs={24} sm={24} md={12}>
             <StyledTextField
               label="Email address"
+              type="email"
+              name="email"
               variant="filled"
-              defaultValue={"SPTEL"}
+              disabled
+              defaultValue={user.email}
               fullWidth
             />
           </Col>
@@ -40,11 +47,13 @@ export function EditUser() {
               <Select
                 id="customized-select-role"
                 labelId="customized-select-role"
+                name="role"
                 input={<StyledDropDown />}
-                defaultValue={"User"}
+                defaultValue={user.roleId}
               >
-                <MenuItem value={"Admin"}>Admin</MenuItem>
-                <MenuItem value={"User"}>User</MenuItem>
+                <MenuItem value={"1"}>Admin</MenuItem>
+                <MenuItem value={"2"}>Operator</MenuItem>
+                <MenuItem value={"3"}>User</MenuItem>
               </Select>
             </FormControl>
           </Col>
@@ -73,7 +82,7 @@ export function EditUser() {
             </Stack>
           </Box>
         </Row>
-      </form>
+      </Form>
     </>
   );
 }

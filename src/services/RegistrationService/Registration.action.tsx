@@ -1,9 +1,9 @@
 import { json, redirect } from "react-router-dom";
-import { userURL } from "../../util/Config/config";
+import { userURL } from "../../util";
 
 export async function registrationAction({ request }) {
   const data = await request.formData();
-  const name = await data.get("name");
+  const name = data.get("name");
   const email = data.get("email");
   const password = data.get("password");
   const confirmPassword = data.get("confirmPassword");

@@ -1,6 +1,6 @@
 import { Box, Grid, Typography, useTheme } from "@mui/material";
 import { ResetPasswordForm } from "../../../components";
-import { PasswordValidationProvider } from "../../../util";
+import { ValidatePasswords } from "../../../util";
 
 export function ResetPassword() {
   const theme = useTheme();
@@ -15,9 +15,9 @@ export function ResetPassword() {
         <Grid item xs={18} md={12} lg={6}>
           <Typography variant="h4">Reset Password</Typography>
           <Box marginTop={theme.spacing(4)}>
-            <PasswordValidationProvider>
+            <ValidatePasswords>
               <ResetPasswordForm />
-            </PasswordValidationProvider>
+            </ValidatePasswords>
           </Box>
         </Grid>
       </Grid>

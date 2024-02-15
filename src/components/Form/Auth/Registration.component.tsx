@@ -16,7 +16,7 @@ export function RegistrationForm({}) {
     useContext(PasswordValidationContext);
   return (
     <>
-      <Form method="post">
+      <Form method="POST">
         <Stack spacing={theme.spacing(4)} useFlexGap>
           <Box>
             <label htmlFor="username">
