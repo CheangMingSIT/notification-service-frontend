@@ -35,6 +35,7 @@ export function NotificationRecord({ logs }) {
           message: log.message,
           scheduleDate: new Date(log.scheduleDate).toLocaleDateString("en-UK"),
         }))}
+        scroll={{ y: 640 }}
         loading={navigation.state === "loading" ? true : false}
         onRow={(record) => ({
           style: { cursor: "pointer" },

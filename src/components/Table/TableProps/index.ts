@@ -1,4 +1,5 @@
 export * from "./ApikeyList.tableprops";
+export * from "./CreateRole.tableprops";
 export * from "./NotificationList.tableprops";
 export * from "./PermissionList.tableprops";
 export * from "./RoleList.tableprops";

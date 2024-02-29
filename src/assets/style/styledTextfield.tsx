@@ -23,10 +23,12 @@ export const StyledTextField = styled((props: TextFieldProps) => (
       "box-shadow",
       "background-color",
     ]),
-
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.grey[300], 0.25),
+    },
     "&.Mui-focused": {
       backgroundColor: "transparent",
-      boxShadow: `${alpha(theme.palette.grey[800], 0.25)} 0 0 0 2px`,
+      boxShadow: `${alpha(theme.palette.grey[800], 0.25)} 0 0 0 1px`,
       borderColor: theme.palette.primary.main,
     },
   },

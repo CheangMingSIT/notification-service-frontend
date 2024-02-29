@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Col, Row } from "antd";
 import { Form, useNavigate } from "react-router-dom";
-import { StyledDropDown, StyledTextField } from "../../../assets/style";
+import { StyledDropDown } from "../../../assets/style";
 export function CreatePermission() {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -20,10 +20,10 @@ export function CreatePermission() {
         <Row gutter={[20, 24]}>
           <Col xs={24} sm={24} md={12}>
             <FormControl variant="filled" fullWidth>
-              <InputLabel id="customized-select-role">Operation</InputLabel>
+              <InputLabel id="operation">Operation</InputLabel>
               <Select
-                id="customized-select-role"
-                labelId="customized-select-role"
+                id="operation"
+                labelId="operation"
                 name="operation"
                 required
                 input={<StyledDropDown />}
@@ -45,15 +45,35 @@ export function CreatePermission() {
             </FormControl>
           </Col>
           <Col xs={24} sm={24} md={12}>
-            <StyledTextField
-              label="Subject"
-              variant="filled"
-              autoComplete="off"
-              required
-              type="text"
-              name="subject"
-              fullWidth
-            />
+            <FormControl id="subject" variant="filled" fullWidth>
+              <InputLabel id="subject">Subject</InputLabel>
+              <Select
+                id="subject"
+                labelId="subject"
+                name="subject"
+                required
+                input={<StyledDropDown />}
+              >
+                <MenuItem key="All" value="All">
+                  All
+                </MenuItem>
+                <MenuItem key="User" value="User">
+                  User
+                </MenuItem>
+                <MenuItem key="Role" value="Role">
+                  Role
+                </MenuItem>
+                <MenuItem key="ApiKey" value="ApiKey">
+                  ApiKey
+                </MenuItem>
+                <MenuItem key="NotificationRecord" value="NotificationRecord">
+                  Notification Record
+                </MenuItem>
+                <MenuItem key="RolePermission" value="RolePermission">
+                  Role Permission
+                </MenuItem>
+              </Select>
+            </FormControl>
           </Col>
         </Row>
         <Row justify={"end"}>

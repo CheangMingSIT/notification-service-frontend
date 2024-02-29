@@ -1,5 +1,5 @@
-import { defer } from "react-router-dom";
-import { userURL } from "../../util";
+import { defer, json } from "react-router-dom";
+import { userURL } from "../../../util";
 
 async function Loader(userId) {
   const user = new URL(
@@ -11,6 +11,12 @@ async function Loader(userId) {
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+  if (!response.ok) {
+    return json(
+      { error: "Something happen to get user loader." },
+      response.status
+    );
+  }
   const data = await response.json();
   return data.data;
 }

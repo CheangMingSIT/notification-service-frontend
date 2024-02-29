@@ -5,6 +5,6 @@ export const StyledDialog = styled(Dialog)(({ theme }) => ({
     borderRadius: "10px",
   },
   "& .MuiDialogActions-root": {
-    padding: theme.spacing(6),
+    padding: theme.spacing(4),
   },
 }));

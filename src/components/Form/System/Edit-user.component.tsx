@@ -14,7 +14,6 @@ import { StyledDropDown, StyledTextField } from "../../../assets/style";
 export function EditUser({ user }) {
   const theme = useTheme();
   const navigate = useNavigate();
-
   return (
     <>
       <Form method="PATCH">
@@ -25,7 +24,9 @@ export function EditUser({ user }) {
               type="text"
               name="name"
               variant="filled"
-              disabled
+              inputProps={{
+                readOnly: true,
+              }}
               defaultValue={user.name}
               fullWidth
             />
@@ -36,7 +37,9 @@ export function EditUser({ user }) {
               type="email"
               name="email"
               variant="filled"
-              disabled
+              inputProps={{
+                readOnly: true,
+              }}
               defaultValue={user.email}
               fullWidth
             />
@@ -51,9 +54,15 @@ export function EditUser({ user }) {
                 input={<StyledDropDown />}
                 defaultValue={user.roleId}
               >
-                <MenuItem value={"1"}>Admin</MenuItem>
-                <MenuItem value={"2"}>Operator</MenuItem>
-                <MenuItem value={"3"}>User</MenuItem>
+                <MenuItem key="1" value="1">
+                  Admin
+                </MenuItem>
+                <MenuItem key="2" value="2">
+                  Operator
+                </MenuItem>
+                <MenuItem key="3" value="3">
+                  User
+                </MenuItem>
               </Select>
             </FormControl>
           </Col>

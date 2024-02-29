@@ -1,5 +1,5 @@
 import { json, redirect } from "react-router-dom";
-import { userURL } from "../../util";
+import { userURL } from "../../../util";
 
 export async function UpdateUserAction({ request, params }) {
   const submittedData = await request.formData();

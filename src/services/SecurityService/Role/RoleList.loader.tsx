@@ -1,5 +1,5 @@
 import { defer } from "react-router-dom";
-import { userURL } from "../../util";
+import { userURL } from "../../../util";
 
 async function Loader() {
   const roles = new URL(`${userURL}/v1/api/notification-system/listRoles`);

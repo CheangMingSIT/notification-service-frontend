@@ -6,7 +6,7 @@ export function Overview() {
   return (
     <>
       <Row>
-        <Typography variant="h2">Overview</Typography>
+        <Typography variant="h3">Overview</Typography>
       </Row>
       <Row style={{ marginTop: "2rem" }}>
         <Typography variant="h6">Today's Stats</Typography>

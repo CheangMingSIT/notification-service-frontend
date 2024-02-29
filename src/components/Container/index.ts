@@ -1,2 +1,2 @@
-export * from "./Formcointainer.component";
-export * from "./ModalContainer.component";
+export * from "./Form-cointainer.component";
+export * from "./Modal-container.component";

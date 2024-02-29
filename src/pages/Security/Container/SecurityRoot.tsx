@@ -14,14 +14,6 @@ export function SecurityRoot() {
       label: "Users",
     },
     {
-      key: "/Security/Roles",
-      label: "Roles",
-    },
-    {
-      key: "/Security/Permissions",
-      label: "Permissions",
-    },
-    {
       key: "/Security/ApiKeys",
       label: "Api Keys",
     },
@@ -29,7 +21,7 @@ export function SecurityRoot() {
   const theme = useTheme();
   return (
     <>
-      <Typography variant="h2">Security</Typography>
+      <Typography variant="h3">Business System</Typography>
       <Box marginTop={theme.spacing(8)}>
         <Tabs activeKey={location.pathname} items={items} onChange={onChange} />
         <Outlet />

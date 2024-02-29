@@ -12,18 +12,27 @@ import { Overview } from "./pages/Overview";
 import { Records } from "./pages/Records";
 import { LoginRoot, Root } from "./pages/Root";
 import {
-  AddPermission,
   ApiKeySecurity,
-  PermissionSecurity,
-  RoleSecurity,
   SecurityRoot,
   UserEditSecurity,
   UserSecurity,
 } from "./pages/Security";
 import {
+  AddPermission,
+  ConfigurationRoot,
+  CreateRole,
+  PermissionSecurity,
+  RoleSecurity,
+} from "./pages/System Configuration";
+import {
+  DisableUserAction,
+  EnableUserAction,
   GetUserLoader,
   UpdateUserAction,
+  apiKeyListLoader,
+  createApiKeyAction,
   createPermissionAction,
+  deleteApiKeyAction,
   forgotPasswordAction,
   loginAction,
   permissionListLoader,
@@ -95,9 +104,38 @@ const router = createBrowserRouter([
             path: "Users",
             element: <UserSecurity />,
             loader: userListLoader,
+            children: [
+              {
+                path: ":userId/disable",
+                action: DisableUserAction,
+              },
+              {
+                path: ":userId/enable",
+                action: EnableUserAction,
+              },
+            ],
           },
           {
+            path: "ApiKeys",
+            element: <ApiKeySecurity />,
+            loader: apiKeyListLoader,
+            action: createApiKeyAction,
+            children: [
+              {
+                path: ":id/delete",
+                action: deleteApiKeyAction,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "/SystemConfiguration",
+        element: <ConfigurationRoot />,
+        children: [
+          {
             path: "Roles",
+            index: true,
             element: <RoleSecurity />,
             loader: roleListLoader,
           },
@@ -105,10 +143,6 @@ const router = createBrowserRouter([
             path: "Permissions",
             element: <PermissionSecurity />,
             loader: permissionListLoader,
-          },
-          {
-            path: "ApiKeys",
-            element: <ApiKeySecurity />,
           },
         ],
       },
@@ -125,9 +159,14 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/Security/Permissions/Create",
+        path: "/SystemConfiguration/Permissions/Create",
         element: <AddPermission />,
         action: createPermissionAction,
+      },
+      {
+        path: "/SystemConfiguration/Roles/Create",
+        element: <CreateRole />,
+        loader: permissionListLoader,
       },
       {
         path: "/Logout",

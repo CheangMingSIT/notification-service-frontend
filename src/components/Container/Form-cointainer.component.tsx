@@ -19,7 +19,7 @@ export function FormContainer({ Header, Subtitle, Linkname, children }) {
           {Linkname}
         </Button>
         <Box sx={{ marginTop: theme.spacing(8) }}>
-          <Typography variant="h2">{Header}</Typography>
+          <Typography variant="h4">{Header}</Typography>
           <Typography variant="h6" sx={{ marginTop: theme.spacing(15) }}>
             {Subtitle}
           </Typography>

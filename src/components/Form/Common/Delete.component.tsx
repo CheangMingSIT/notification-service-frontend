@@ -5,21 +5,17 @@ import {
   DialogContentText,
   DialogTitle,
   Stack,
-  Typography,
 } from "@mui/material";
+import { Form } from "react-router-dom";
 import { ModalContainer } from "../..";
 
-export function DeleteModal({ openDelete, handleCloseDelete }) {
+export function DeleteModal({ action, openDelete, handleCloseDelete }) {
   return (
     <ModalContainer open={openDelete} handleClose={handleCloseDelete}>
-      <DialogTitle>
-        <Typography variant="h4">Delete</Typography>
-      </DialogTitle>
+      <DialogTitle>Delete</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body1">
-            Are you sure you want to delete? This can't be undone.
-          </Typography>
+          Are you sure you want to delete? This can't be undone.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -32,14 +28,16 @@ export function DeleteModal({ openDelete, handleCloseDelete }) {
           >
             Cancel
           </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            color="error"
-            disableElevation
-          >
-            Delete
-          </Button>
+          <Form method="DELETE" action={action}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="error"
+              disableElevation
+            >
+              Delete
+            </Button>
+          </Form>
         </Stack>
       </DialogActions>
     </ModalContainer>

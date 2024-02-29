@@ -20,7 +20,7 @@ export function Records() {
   return (
     <>
       <Row>
-        <Typography variant="h2">Records</Typography>
+        <Typography variant="h3">Records</Typography>
       </Row>
       <Row gutter={[16, 16]}>
         <Col

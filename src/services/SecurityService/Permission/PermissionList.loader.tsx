@@ -1,9 +1,9 @@
 import { defer } from "react-router-dom";
-import { userURL } from "../../util";
+import { userURL } from "../../../util";
 
 async function Loader(action, subject) {
   const permissions = new URL(
-    `${userURL}/v1/api/notification-system/listPermissions?page=1&limit=10`
+    `${userURL}/v1/api/notification-system/listPermissions?page=1&limit=100`
   );
   action && permissions.searchParams.append("action", action);
   subject && permissions.searchParams.append("subject", subject);
@@ -14,6 +14,10 @@ async function Loader(action, subject) {
     },
   });
   const data = await response.json();
+  data.data.forEach((element, index) => {
+    element.key = index + 1;
+  });
+
   return data.data;
 }
 export async function permissionListLoader({ request }) {

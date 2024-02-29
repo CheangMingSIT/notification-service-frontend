@@ -13,10 +13,7 @@ import { useState } from "react";
 import { Form, Link, useLoaderData, useSubmit } from "react-router-dom";
 import { StyledButton } from "../../../assets/style";
 import { PermissionListColumn, Record } from "../../../components";
-
-type PermissionDataTypes = {
-  data: { action: string; subject: string }[];
-};
+import { PermissionDataTypes } from "../../../util";
 
 export function PermissionSecurity() {
   const theme = useTheme();
@@ -87,6 +84,9 @@ export function PermissionSecurity() {
                   value={operation}
                   onChange={handleChangeOperation}
                 >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
                   <MenuItem key="manage" value="manage">
                     Manage
                   </MenuItem>
@@ -107,7 +107,7 @@ export function PermissionSecurity() {
               <FormControl
                 sx={{ width: { sm: "100%", md: "12rem%", lg: "14rem" } }}
               >
-                <InputLabel htmlFor="Subject" id="Subject" size="small">
+                <InputLabel id="Subject" size="small">
                   Subject
                 </InputLabel>
                 <Select
@@ -146,7 +146,7 @@ export function PermissionSecurity() {
             disableElevation
             startIcon={<AddIcon />}
             component={Link}
-            to="/Security/Permissions/Create"
+            to="/SystemConfiguration/Permissions/Create"
             sx={{ width: { xs: "100%", sm: "100%", md: "100%" } }}
           >
             Generate new permission
