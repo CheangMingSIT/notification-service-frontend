@@ -37,22 +37,6 @@ export function FilterForm() {
             </Box>
             <Box>
               <Typography variant="body2" fontWeight={500}>
-                User ID
-              </Typography>
-              <TextField
-                type="search"
-                id="UserId"
-                name="UserId"
-                size="small"
-                multiline
-                fullWidth
-                margin="dense"
-                rows={2}
-                placeholder="Search User ID"
-              />
-            </Box>
-            <Box>
-              <Typography variant="body2" fontWeight={500}>
                 Secret Key
               </Typography>
               <TextField

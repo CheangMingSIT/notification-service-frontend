@@ -1,1 +1,1 @@
-export * from "./Security.interface";
+export * from "./security.interface";

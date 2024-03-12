@@ -20,12 +20,14 @@ export type GetUserDataTypes = {
 
 export type RoleDataType = {
   data: {
+    id: number;
     role: string;
   }[];
 };
 
 export type PermissionDataTypes = {
-  data: { action: string; subject: string }[];
+  permissions: any;
+  data: { permissionId: number; operation: string; resource: string }[];
 };
 
 export type ApiKeyDataTypes = {
@@ -35,3 +37,24 @@ export type ApiKeyDataTypes = {
     secretKey: string;
   }[];
 };
+
+export type OrganisationUserTypes = {
+  data: {
+    [organisationId: string]: {
+      userId: string;
+      name: string;
+      role: string;
+      organisationId: string;
+      organisationName: string;
+    }[];
+  };
+};
+
+export type OrganisationListDataTypes = {
+  data: {
+    id: string;
+    name: string;
+  }[];
+};
+
+export type ErrorDataTypes = { statusCode: number; message: string };

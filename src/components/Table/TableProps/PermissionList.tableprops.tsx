@@ -1,5 +1,5 @@
 import { TableProps } from "antd";
-export interface PermissionListDataTypes {
+interface PermissionListDataTypes {
   No: number;
   Operation: string;
   Subject: string;
@@ -17,8 +17,8 @@ export const PermissionListColumn: TableProps<PermissionListDataTypes>["columns"
       key: "operation",
     },
     {
-      title: "Subject",
-      dataIndex: "subject",
-      key: "subject",
+      title: "Resource",
+      dataIndex: "resource",
+      key: "resource",
     },
   ];

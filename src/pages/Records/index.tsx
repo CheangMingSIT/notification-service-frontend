@@ -20,7 +20,9 @@ export function Records() {
   return (
     <>
       <Row>
-        <Typography variant="h3">Records</Typography>
+        <Typography variant="h5" fontWeight={700}>
+          Notification Records
+        </Typography>
       </Row>
       <Row gutter={[16, 16]}>
         <Col
@@ -29,7 +31,7 @@ export function Records() {
           md={24}
           lg={24}
           xl={24}
-          style={{ marginTop: "2rem" }}
+          style={{ marginTop: "1rem" }}
         >
           <Row justify={"end"}>
             <Button

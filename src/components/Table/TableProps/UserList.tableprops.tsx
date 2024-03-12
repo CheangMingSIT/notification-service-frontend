@@ -1,6 +1,6 @@
 import { TableProps } from "antd";
 
-export interface UserDataTypes {
+interface UserDataTypes {
   key: React.Key;
   userId: number;
   name: string;

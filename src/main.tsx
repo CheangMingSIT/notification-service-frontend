@@ -12,26 +12,29 @@ import { Overview } from "./pages/Overview";
 import { Records } from "./pages/Records";
 import { LoginRoot, Root } from "./pages/Root";
 import {
-  ApiKeySecurity,
-  SecurityRoot,
-  UserEditSecurity,
-  UserSecurity,
-} from "./pages/Security";
-import {
-  AddPermission,
   ConfigurationRoot,
   CreateRole,
-  PermissionSecurity,
-  RoleSecurity,
+  RoleConfiguration,
 } from "./pages/System Configuration";
 import {
+  ApiKeySecurity,
+  CreateOrganisation,
+  Organisation,
+  UserEditSecurity,
+  UserManagementRoot,
+  UserSecurity,
+} from "./pages/User Management";
+import {
+  CreateOrganisationAction,
   DisableUserAction,
   EnableUserAction,
+  GetOrganisationUsers,
   GetUserLoader,
+  OrganisationList,
   UpdateUserAction,
   apiKeyListLoader,
   createApiKeyAction,
-  createPermissionAction,
+  createRoleAction,
   deleteApiKeyAction,
   forgotPasswordAction,
   loginAction,
@@ -97,8 +100,8 @@ const router = createBrowserRouter([
         element: <h3>Analytics</h3>,
       },
       {
-        path: "/Security",
-        element: <SecurityRoot />,
+        path: "/UserManagement",
+        element: <UserManagementRoot />,
         children: [
           {
             path: "Users",
@@ -127,27 +130,28 @@ const router = createBrowserRouter([
               },
             ],
           },
+          {
+            path: "Organisation",
+            element: <Organisation />,
+            loader: GetOrganisationUsers,
+          },
         ],
       },
       {
         path: "/SystemConfiguration",
         element: <ConfigurationRoot />,
+        id: "role-id",
+        loader: roleListLoader,
         children: [
           {
             path: "Roles",
             index: true,
-            element: <RoleSecurity />,
-            loader: roleListLoader,
-          },
-          {
-            path: "Permissions",
-            element: <PermissionSecurity />,
-            loader: permissionListLoader,
+            element: <RoleConfiguration />,
           },
         ],
       },
       {
-        path: "/Security/Users/:userId",
+        path: "/UserManagement/Users/:userId",
         id: "user-id",
         loader: GetUserLoader,
         children: [
@@ -159,14 +163,16 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/SystemConfiguration/Permissions/Create",
-        element: <AddPermission />,
-        action: createPermissionAction,
-      },
-      {
         path: "/SystemConfiguration/Roles/Create",
         element: <CreateRole />,
         loader: permissionListLoader,
+        action: createRoleAction,
+      },
+      {
+        path: "/UserManagement/Organisation/Create",
+        element: <CreateOrganisation />,
+        loader: OrganisationList,
+        action: CreateOrganisationAction,
       },
       {
         path: "/Logout",

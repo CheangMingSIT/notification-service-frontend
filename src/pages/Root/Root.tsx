@@ -33,16 +33,18 @@ export function Root() {
               },
               Menu: {
                 darkItemBg: "#02364B",
-                darkItemSelectedBg: "#012737",
-                itemBorderRadius: 0,
+                darkSubMenuItemBg: "#012737",
+                darkItemSelectedBg: "#04648A",
+                itemMarginBlock: 0,
                 itemMarginInline: 0,
+                itemBorderRadius: 0,
               },
             },
           }}
         >
           <Layout style={{ minHeight: "100vh", background: "white" }}>
             <SideBarComponent />
-            <Content style={{ margin: "1rem 2rem 0rem 2rem" }}>
+            <Content style={{ margin: 0, padding: 30 }}>
               <main>
                 <Outlet />
               </main>

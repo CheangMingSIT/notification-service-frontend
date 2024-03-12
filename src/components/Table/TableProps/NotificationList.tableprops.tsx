@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { TableProps, Tag } from "antd";
 
-export interface NotificationRecordDataTypes {
+interface NotificationRecordDataTypes {
   key: string;
   id: string;
   userId: string;

@@ -8,8 +8,14 @@ export interface CreateRoleDataTypes {
 }
 export const CreateRoleColumn: TableProps<CreateRoleDataTypes>["columns"] = [
   {
+    title: "Permission ID",
+    dataIndex: "permissionId",
+    key: "permissionId",
+    hidden: true,
+  },
+  {
     title: "Operation",
-    dataIndex: "action",
+    dataIndex: "operation",
     key: "operation",
     render: (text) => (
       <Typography textTransform="capitalize" variant="subtitle2">
@@ -18,9 +24,9 @@ export const CreateRoleColumn: TableProps<CreateRoleDataTypes>["columns"] = [
     ),
   },
   {
-    title: "Subject",
-    dataIndex: "subject",
-    key: "subject",
+    title: "Resource",
+    dataIndex: "resource",
+    key: "resource",
     render: (text) => (
       <Typography textTransform="capitalize" variant="subtitle2">
         {text}

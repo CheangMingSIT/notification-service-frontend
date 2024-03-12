@@ -1,10 +1,9 @@
 import { ArrowBack } from "@mui/icons-material";
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
 
 export function FormContainer({ Header, Subtitle, Linkname, children }) {
-  const theme = useTheme();
   const navigate = useNavigate();
   return (
     <Row>
@@ -18,12 +17,12 @@ export function FormContainer({ Header, Subtitle, Linkname, children }) {
         >
           {Linkname}
         </Button>
-        <Box sx={{ marginTop: theme.spacing(8) }}>
-          <Typography variant="h4">{Header}</Typography>
-          <Typography variant="h6" sx={{ marginTop: theme.spacing(15) }}>
+        <Box marginTop={8}>
+          <Typography variant="h3">{Header}</Typography>
+          <Typography variant="h6" marginTop={15}>
             {Subtitle}
           </Typography>
-          <Box marginTop={theme.spacing(4)}>{children}</Box>
+          <Box marginTop={4}>{children}</Box>
         </Box>
       </Col>
       <Col xs={0} sm={0} md={4} />

@@ -24,6 +24,7 @@ export const theme = createTheme({
     fontSize: 14,
     h2: {
       fontWeight: 700,
+      color: "#434343",
       fontSize: "45px",
     },
     h3: {
@@ -33,10 +34,12 @@ export const theme = createTheme({
     },
     h4: {
       fontWeight: 700,
+      color: "#434343",
       fontSize: "30px",
     },
     h5: {
       fontWeight: 600,
+      color: "#434343",
       fontSize: "24px",
     },
     h6: {
@@ -44,10 +47,11 @@ export const theme = createTheme({
       fontSize: "20px",
     },
     body1: {
-      fontWeight: 400,
+      fontWeight: 300,
+      fontSize: "16px",
     },
     subtitle1: {
-      fontWeight: 300,
+      fontWeight: 200,
     },
   },
   components: {

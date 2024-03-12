@@ -3,7 +3,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { IconButton } from "@mui/material";
 import { Space, TableProps } from "antd";
 
-export interface RoleListDataTypes {
+interface RoleListDataTypes {
   No: number;
   Role: string;
 }
@@ -13,6 +13,7 @@ export const roleListColumn: TableProps<RoleListDataTypes>["columns"] = [
     title: "No.",
     dataIndex: "no",
     key: "no",
+    responsive: ["md"],
   },
   {
     title: "Role",
