@@ -9,11 +9,35 @@ import {
   useTheme,
 } from "@mui/material";
 import { Col, Row } from "antd";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 import { StyledDropDown, StyledTextField } from "../../../assets/style";
+import { userURL } from "../../../util";
 export function EditUser({ user }) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const [roleList, setRoleList] = useState<{ id: number; role: string }[]>([]);
+  useEffect(() => {
+    const fetchDropDownRole = async () => {
+      try {
+        const response = await axios.get(
+          `${userURL}/v1/api/notification-system/roleListbasedOnOrganisationId/${user.organisationId}`,
+          {
+            method: "GET",
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setRoleList(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchDropDownRole();
+  }, []);
+
   return (
     <>
       <Form method="PATCH">
@@ -27,7 +51,7 @@ export function EditUser({ user }) {
               inputProps={{
                 readOnly: true,
               }}
-              defaultValue={user.name}
+              defaultValue={user.name || ""}
               fullWidth
             />
           </Col>
@@ -54,17 +78,22 @@ export function EditUser({ user }) {
                 input={<StyledDropDown />}
                 defaultValue={user.roleId}
               >
-                <MenuItem key="1" value="1">
-                  Admin
-                </MenuItem>
-                <MenuItem key="2" value="2">
-                  Operator
-                </MenuItem>
-                <MenuItem key="3" value="3">
-                  User
-                </MenuItem>
+                {roleList.map((role) => (
+                  <MenuItem key={role.id} value={role.id}>
+                    {role.role}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
+          </Col>
+          <Col xs={24} sm={24} md={12}>
+            <StyledTextField
+              label="Organisation"
+              variant="filled"
+              inputProps={{ readOnly: true }}
+              defaultValue={user.organisationName}
+              fullWidth
+            />
           </Col>
         </Row>
         <Row justify={"end"}>

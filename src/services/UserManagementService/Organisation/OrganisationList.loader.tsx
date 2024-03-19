@@ -1,4 +1,4 @@
-import { defer } from "react-router-dom";
+import { defer, json } from "react-router-dom";
 import { userURL } from "../../../util";
 
 async function Loader() {
@@ -11,8 +11,8 @@ async function Loader() {
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
-  if (!response.ok) {
-    return response;
+  if (response.status === 403) {
+    throw json("You are not authorized to view this page.", response.status);
   }
   const data = await response.json();
   return data.data;

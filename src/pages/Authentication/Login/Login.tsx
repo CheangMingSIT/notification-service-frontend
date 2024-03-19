@@ -1,6 +1,6 @@
 import { Grid, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link, useActionData, useNavigate } from "react-router-dom";
+import { useActionData, useNavigate } from "react-router-dom";
 import { LoginForm } from "../../../components";
 
 export function Login() {
@@ -24,15 +24,8 @@ export function Login() {
         style={{ minHeight: "100vh" }}
       >
         <Grid item md={6} xs={12}>
-          <Typography variant="h4">Welcome Back!</Typography>
-          <Typography variant="body1" sx={{ marginBottom: theme.spacing(3) }}>
-            Don't have an account?{" "}
-            <Link
-              to="./register"
-              style={{ textDecoration: "none", color: "#05445E" }}
-            >
-              <b>Register</b>
-            </Link>
+          <Typography variant="h4" gutterBottom>
+            Welcome Back!
           </Typography>
           <LoginForm
             handleForgetPassword={handleForgetPassword}

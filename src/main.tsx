@@ -2,35 +2,40 @@ import { Result } from "antd";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import {
-  ForgotPassword,
-  Login,
-  Registration,
-  ResetPassword,
-} from "./pages/Authentication";
+import { ForgotPassword, Login, ResetPassword } from "./pages/Authentication";
+import { ErrorPage } from "./pages/Error";
 import { Overview } from "./pages/Overview";
 import { Records } from "./pages/Records";
 import { LoginRoot, Root } from "./pages/Root";
 import {
   ConfigurationRoot,
   CreateRole,
+  EditRole,
   RoleConfiguration,
 } from "./pages/System Configuration";
 import {
   ApiKeySecurity,
   CreateOrganisation,
   Organisation,
+  OrganisationAdminSetup,
+  UserCreate,
   UserEditSecurity,
   UserManagementRoot,
   UserSecurity,
 } from "./pages/User Management";
 import {
   CreateOrganisationAction,
+  CreateOrganisationAdminAction,
+  DisableOrganisation,
   DisableUserAction,
+  EnableOrganisation,
   EnableUserAction,
-  GetOrganisationUsers,
+  GetRoleLoader,
   GetUserLoader,
+  GroupUsersByOrganisation,
   OrganisationList,
+  ToggleRoleStatusAction,
+  UpdateRolePermissionAction,
   UpdateUserAction,
   apiKeyListLoader,
   createApiKeyAction,
@@ -65,11 +70,6 @@ const router = createBrowserRouter([
         action: loginAction,
       },
       {
-        path: "/register",
-        element: <Registration />,
-        action: registrationAction,
-      },
-      {
         path: "/forgot-password",
         element: <ForgotPassword />,
         action: forgotPasswordAction,
@@ -102,6 +102,9 @@ const router = createBrowserRouter([
       {
         path: "/UserManagement",
         element: <UserManagementRoot />,
+        errorElement: <ErrorPage />,
+        id: "role-dropdown",
+        loader: roleListLoader,
         children: [
           {
             path: "Users",
@@ -133,7 +136,7 @@ const router = createBrowserRouter([
           {
             path: "Organisation",
             element: <Organisation />,
-            loader: GetOrganisationUsers,
+            loader: GroupUsersByOrganisation,
           },
         ],
       },
@@ -145,15 +148,31 @@ const router = createBrowserRouter([
         children: [
           {
             path: "Roles",
-            index: true,
             element: <RoleConfiguration />,
+            children: [
+              {
+                path: ":roleId/disable",
+                action: ToggleRoleStatusAction,
+              },
+              {
+                path: ":roleId/enable",
+                action: ToggleRoleStatusAction,
+              },
+            ],
           },
         ],
+      },
+      {
+        path: "/UserManagement/Users/Create",
+        element: <UserCreate />,
+        loader: roleListLoader,
+        action: registrationAction,
       },
       {
         path: "/UserManagement/Users/:userId",
         id: "user-id",
         loader: GetUserLoader,
+        errorElement: <ErrorPage />,
         children: [
           {
             path: "edit",
@@ -169,10 +188,44 @@ const router = createBrowserRouter([
         action: createRoleAction,
       },
       {
+        path: "/SystemConfiguration/Roles/:roleId",
+        id: "individual-role-data",
+        loader: GetRoleLoader,
+        children: [
+          {
+            path: "edit",
+            element: <EditRole />,
+            loader: permissionListLoader,
+            action: UpdateRolePermissionAction,
+          },
+        ],
+      },
+      {
         path: "/UserManagement/Organisation/Create",
         element: <CreateOrganisation />,
+        errorElement: <ErrorPage />,
         loader: OrganisationList,
         action: CreateOrganisationAction,
+        children: [
+          {
+            path: ":organisationId/disable",
+            action: DisableOrganisation,
+          },
+          {
+            path: ":organisationId/enable",
+            action: EnableOrganisation,
+          },
+        ],
+      },
+      {
+        path: "/UserManagement/Organisation/CreateAdmin",
+        children: [
+          {
+            path: ":organisationId",
+            element: <OrganisationAdminSetup />,
+            action: CreateOrganisationAdminAction,
+          },
+        ],
       },
       {
         path: "/Logout",

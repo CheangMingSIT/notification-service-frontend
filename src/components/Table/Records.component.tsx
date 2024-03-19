@@ -1,6 +1,6 @@
 import { Table } from "antd";
 
-export function Record({ columns, data, rowKey, showSizeChanger }) {
+export function Record({ columns, data, rowKey, showSizeChanger, scrollSize }) {
   return (
     <>
       <Table
@@ -8,6 +8,7 @@ export function Record({ columns, data, rowKey, showSizeChanger }) {
         columns={columns}
         dataSource={data}
         pagination={{ showSizeChanger: showSizeChanger }}
+        scroll={{ y: scrollSize }}
       />
     </>
   );

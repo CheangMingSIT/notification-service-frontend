@@ -141,6 +141,7 @@ export function ApiKeySecurity() {
             placeholder="Search name"
             name="name"
             size="small"
+            autoComplete="off"
             variant="outlined"
             onChange={(event) => submit(event.currentTarget.form)}
             sx={{ width: { xs: "100%", sm: "100%", md: "22rem", lg: "22rem" } }}
@@ -242,6 +243,7 @@ export function ApiKeySecurity() {
             },
           ]}
           data={apikeyData}
+          scrollSize={"calc(100vh - 300px)"}
           rowKey={(apiKeys) => apiKeys.id}
         />
       </Box>

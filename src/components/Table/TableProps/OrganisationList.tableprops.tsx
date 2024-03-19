@@ -11,11 +11,10 @@ export const OrganisationListColumn: TableProps<OrganisationListDataTypes>["colu
       title: "ID",
       dataIndex: "id",
       key: "id",
-      width: 400,
     },
     {
       title: "Organisation",
-      dataIndex: "organisation",
-      key: "organisation",
+      dataIndex: "name",
+      key: "name",
     },
   ];

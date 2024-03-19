@@ -1,4 +1,4 @@
-import { json, redirect } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { userURL } from "../../../util";
 
 export async function DisableUserAction({ params }) {
@@ -12,11 +12,8 @@ export async function DisableUserAction({ params }) {
       },
     }
   );
-  if (!response.ok) {
-    return json(
-      { error: "Something happen to the disable user action" },
-      response.status
-    );
+  if (response.status === 403) {
+    throw new Response("You are not allowed to disable user.", { status: 403 });
   }
   return redirect("/UserManagement/Users");
 }

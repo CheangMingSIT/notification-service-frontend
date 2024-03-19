@@ -1,95 +1,140 @@
+import AddIcon from "@mui/icons-material/Add";
 import {
-  Box,
-  Button,
-  Stack,
+  FormControl,
+  FormLabel,
+  Grid,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   TextField,
   Typography,
-  useTheme,
 } from "@mui/material";
-import { useContext } from "react";
-import { Form } from "react-router-dom";
+import { useContext, useState } from "react";
+import { StyledButton } from "../../../assets/style";
 import { PasswordValidationContext } from "../../../util";
-
-export function RegistrationForm({}) {
-  const theme = useTheme();
+export function RegistrationForm({ rolelist }) {
   const { handlePasswordChange, handleConfirmPasswordChange, passwordsMatch } =
     useContext(PasswordValidationContext);
+  const [role, setRole] = useState("");
+  const handleRoleChange = (event: SelectChangeEvent) => {
+    setRole(event.target.value);
+  };
   return (
     <>
-      <Form method="POST">
-        <Stack spacing={theme.spacing(4)} useFlexGap>
-          <Box>
-            <label htmlFor="username">
-              <Typography variant="body1" gutterBottom>
-                Username
-              </Typography>
-            </label>
-            <TextField
-              type="text"
-              name="name"
-              id="name"
-              required
-              placeholder="Username"
-              fullWidth
-            />
-          </Box>
-          <Box>
-            <label htmlFor="email">
-              <Typography variant="body1" gutterBottom>
-                Email
-              </Typography>
-            </label>
-            <TextField
-              id="email"
-              type="email"
-              name="email"
-              required
-              placeholder="Email"
-              fullWidth
-            />
-          </Box>
-          <Box>
-            <label htmlFor="password">
-              <Typography variant="body1" gutterBottom>
-                Password
-              </Typography>
-            </label>
-            <TextField
-              id="password"
-              placeholder="Password"
-              fullWidth
-              required
-              type="password"
-              name="password"
-              error={!passwordsMatch}
-              onChange={handlePasswordChange}
-            />
-          </Box>
-          <Box>
-            <label htmlFor="confirmPassword">
-              <Typography variant="body1" gutterBottom>
-                Confirm Password
-              </Typography>
-            </label>
-            <TextField
-              id="confirmPassword"
-              placeholder="Confirm Password"
-              fullWidth
-              required
-              type="password"
-              name="confirmPassword"
-              error={!passwordsMatch}
-              helperText={
-                !passwordsMatch ? "Both password didn't match" : undefined
-              }
-              onChange={handleConfirmPasswordChange}
-            />
-          </Box>
-          <Button variant="contained" type="submit" fullWidth disableElevation>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={12} md={12}>
+          <FormLabel htmlFor="email">
+            <Typography variant="subtitle2" gutterBottom>
+              Email
+            </Typography>
+          </FormLabel>
+          <TextField
+            id="email"
+            type="email"
+            name="email"
+            required
+            autoComplete="off"
+            placeholder="Email"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+          <FormLabel htmlFor="name">
+            <Typography variant="subtitle2" gutterBottom>
+              Username
+            </Typography>
+          </FormLabel>
+          <TextField
+            type="text"
+            name="name"
+            id="name"
+            required
+            autoComplete="off"
+            placeholder="Username"
+            fullWidth
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={6}>
+          {rolelist && rolelist.length > 0 && (
+            <>
+              <FormLabel htmlFor="role">
+                <Typography variant="subtitle2" gutterBottom>
+                  Role
+                </Typography>
+              </FormLabel>
+              <FormControl variant="outlined" fullWidth required>
+                <Select
+                  id="role"
+                  labelId="role"
+                  name="role"
+                  displayEmpty
+                  onChange={handleRoleChange}
+                  value={role}
+                  inputProps={{ "aria-label": "without-label" }}
+                >
+                  <MenuItem value={""} disabled>
+                    Select Role
+                  </MenuItem>
+                  {rolelist.map((role) => (
+                    <MenuItem key={role.id} value={role.id}>
+                      {role.role}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </>
+          )}
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={6}>
+          <FormLabel htmlFor="password">
+            <Typography variant="subtitle2" gutterBottom>
+              Password
+            </Typography>
+          </FormLabel>
+          <TextField
+            id="password"
+            placeholder="Password"
+            fullWidth
+            required
+            type="password"
+            name="password"
+            error={!passwordsMatch}
+            onChange={handlePasswordChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={12} md={6}>
+          <FormLabel htmlFor="confirmPassword">
+            <Typography variant="subtitle2" gutterBottom>
+              Confirm Password
+            </Typography>
+          </FormLabel>
+          <TextField
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            fullWidth
+            required
+            type="password"
+            name="confirmPassword"
+            error={!passwordsMatch}
+            helperText={
+              !passwordsMatch ? "Both password didn't match" : undefined
+            }
+            onChange={handleConfirmPasswordChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} textAlign="right">
+          <StyledButton
+            variant="contained"
+            type="submit"
+            disableElevation
+            startIcon={<AddIcon />}
+          >
             Register
-          </Button>
-        </Stack>
-      </Form>
+          </StyledButton>
+        </Grid>
+      </Grid>
     </>
   );
 }

@@ -1,10 +1,8 @@
-import { BlockOutlined } from "@mui/icons-material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { IconButton } from "@mui/material";
-import { Space, TableProps } from "antd";
+import { TableProps } from "antd";
 
 interface RoleListDataTypes {
   No: number;
+  id: string;
   Role: string;
 }
 
@@ -19,19 +17,5 @@ export const roleListColumn: TableProps<RoleListDataTypes>["columns"] = [
     title: "Role",
     dataIndex: "role",
     key: "role",
-  },
-  {
-    title: "Actions",
-    key: "Action",
-    render: (_) => (
-      <Space size="small">
-        <IconButton size="small">
-          <EditOutlinedIcon />
-        </IconButton>
-        <IconButton color="error" size="small">
-          <BlockOutlined />
-        </IconButton>
-      </Space>
-    ),
   },
 ];

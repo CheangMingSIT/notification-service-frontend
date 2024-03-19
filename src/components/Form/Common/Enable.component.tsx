@@ -34,6 +34,8 @@ export function EnableModal({ action, openEnable, handleCloseEnable }) {
                 type="submit"
                 variant="contained"
                 color="success"
+                name="intent"
+                value="enable"
                 disableElevation
               >
                 Enable

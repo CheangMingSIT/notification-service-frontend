@@ -6,11 +6,15 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { roleContext } from "../../pages/System Configuration";
 
-export function PermissionList() {
+export function PermissionList({ permissionData }) {
   const uniqueResource = useContext(roleContext);
+  const [checked, setChecked] = useState<number[]>([]);
+  useEffect(() => {
+    setChecked(permissionData || []);
+  }, [permissionData]);
 
   const getResourceData = () => {
     const resourceData = Array.from(
@@ -36,6 +40,19 @@ export function PermissionList() {
           </Typography>
           <Divider sx={{ marginTop: 3, marginBottom: 3 }} />
           {filteredData.map((data) => {
+            const isChecked = checked.includes(data.permissionId);
+            const toggleCheckbox = () => {
+              if (isChecked) {
+                setChecked((prevChecked) =>
+                  prevChecked.filter((id) => id !== data.permissionId)
+                );
+              } else {
+                setChecked((prevChecked) => [
+                  ...prevChecked,
+                  data.permissionId,
+                ]);
+              }
+            };
             return (
               <ListItem
                 key={data.permissionId}
@@ -45,6 +62,8 @@ export function PermissionList() {
                     edge="start"
                     name="permissions"
                     value={data.permissionId}
+                    checked={isChecked}
+                    onChange={toggleCheckbox}
                     inputProps={{
                       "aria-labelledby": `CheckBox-${data.operation}-${data.permissionId}`,
                     }}

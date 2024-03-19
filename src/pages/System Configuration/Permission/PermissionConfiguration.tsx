@@ -159,6 +159,7 @@ export function PermissionConfiguration() {
           columns={PermissionListColumn}
           data={permissionData}
           rowKey={(permissions) => permissions.No}
+          scrollSize={"calc(100vh - 300px)"}
         />
       </Box>
     </>

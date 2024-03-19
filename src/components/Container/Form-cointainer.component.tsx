@@ -7,8 +7,8 @@ export function FormContainer({ Header, Subtitle, Linkname, children }) {
   const navigate = useNavigate();
   return (
     <Row>
-      <Col xs={0} sm={0} md={4} />
-      <Col xs={24} sm={24} md={16}>
+      <Col xs={0} sm={0} md={3} lg={4} />
+      <Col xs={24} sm={24} md={18} lg={16}>
         <Button
           variant="text"
           startIcon={<ArrowBack />}
@@ -18,14 +18,14 @@ export function FormContainer({ Header, Subtitle, Linkname, children }) {
           {Linkname}
         </Button>
         <Box marginTop={8}>
-          <Typography variant="h3">{Header}</Typography>
+          <Typography variant="h4">{Header}</Typography>
           <Typography variant="h6" marginTop={15}>
             {Subtitle}
           </Typography>
           <Box marginTop={4}>{children}</Box>
         </Box>
       </Col>
-      <Col xs={0} sm={0} md={4} />
+      <Col xs={0} sm={0} md={3} lg={4} />
     </Row>
   );
 }

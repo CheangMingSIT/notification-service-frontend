@@ -12,6 +12,12 @@ async function Loader(name) {
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+
+  if (response.status === 403) {
+    throw new Response("You are not allowed to view api keys.", {
+      status: 403,
+    });
+  }
   const data = await response.json();
   return data.data;
 }

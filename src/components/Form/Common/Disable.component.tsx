@@ -34,6 +34,8 @@ export function DisableModal({ action, openDisable, handleCloseDisable }) {
                 type="submit"
                 variant="contained"
                 color="error"
+                name="intent"
+                value="disable"
                 disableElevation
               >
                 Disable

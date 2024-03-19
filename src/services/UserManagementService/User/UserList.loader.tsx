@@ -1,4 +1,4 @@
-import { userURL } from "../../../util";
+import { UserDataType, userURL } from "../../../util";
 
 export async function userListLoader({ request }) {
   const url = new URL(request.url);
@@ -15,22 +15,17 @@ export async function userListLoader({ request }) {
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
-  const data = await response.json();
-  const payload: {
-    userId: any;
-    name: string;
-    email: any;
-    role: any;
-    disabled: boolean;
-  }[] = [];
+  const data: UserDataType = await response.json();
+  const payload: UserDataType["data"] = [];
   data.data.map((user) => {
-    if (user.disabled === true) {
+    if (user.isDisabled === true) {
       payload.push({
         userId: user.userId,
         name: `${user.name} (Disabled)`,
         email: user.email,
         role: user.role,
-        disabled: user.disabled,
+        isDisabled: user.isDisabled,
+        roleId: user.roleId,
       });
     } else {
       payload.push({
@@ -38,7 +33,8 @@ export async function userListLoader({ request }) {
         name: user.name,
         email: user.email,
         role: user.role,
-        disabled: user.disabled,
+        isDisabled: user.isDisabled,
+        roleId: user.roleId,
       });
     }
   });

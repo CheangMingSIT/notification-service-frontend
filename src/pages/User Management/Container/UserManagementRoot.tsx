@@ -19,7 +19,7 @@ export function UserManagementRoot() {
   const generateNewOrganisation = () => {
     if (isMobile) {
       return (
-        <Tooltip title="generate new organisation">
+        <Tooltip title="Create/Edit organisation">
           <IconButton
             component={Link}
             to={"/UserManagement/Organisation/Create"}
@@ -40,7 +40,7 @@ export function UserManagementRoot() {
           disableElevation
           startIcon={<AddIcon />}
         >
-          Generate new Organisation
+          Create/Edit Organisation
         </StyledButton>
       );
     }

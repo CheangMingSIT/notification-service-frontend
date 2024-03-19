@@ -1,4 +1,4 @@
-import { json, redirect } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { userURL } from "../../../util";
 
 export async function UpdateUserAction({ request, params }) {
@@ -18,8 +18,11 @@ export async function UpdateUserAction({ request, params }) {
       body: JSON.stringify({ roleId }),
     }
   );
+  if (response.status === 403) {
+    throw new Response("You are not allowed to update user.", { status: 403 });
+  }
   if (!response.ok) {
-    return json({ error: "Strange...." }, response.status);
+    throw new Response("Something went wrong", { status: 500 });
   }
   return redirect("/UserManagement/Users");
 }

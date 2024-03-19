@@ -5,14 +5,39 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
-import { Form, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Form, useNavigate } from "react-router-dom";
 import { PermissionList } from "../..";
 import { StyledButton, StyledTextField } from "../../../assets/style";
 
-export function CreateRolePermission() {
+export function CreateRolePermission({
+  method,
+  rolename,
+  hasFullDataControl,
+  permissionList,
+}) {
+  const [roleName, setRoleName] = useState("");
+  const [fullDataControl, setFullDataControl] = useState(false);
+  const navigate = useNavigate();
+  if (method === "PATCH") {
+    useEffect(() => {
+      if (rolename) {
+        setRoleName(rolename);
+      }
+      if (hasFullDataControl === true) {
+        setFullDataControl(true);
+      }
+    }, [rolename, hasFullDataControl]);
+  }
+  const handleRoleNameChange = (e) => {
+    setRoleName(e.target.value);
+  };
+  const handleDataControlChange = (e) => {
+    setFullDataControl(e.target.checked);
+  };
   return (
     <>
-      <Form method="POST">
+      <Form method={method}>
         <Grid container>
           <Grid item xs={12} sm={12} md={6}>
             <StyledTextField
@@ -22,6 +47,8 @@ export function CreateRolePermission() {
               required
               fullWidth
               variant="filled"
+              value={roleName}
+              onChange={handleRoleNameChange}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6} />
@@ -35,7 +62,13 @@ export function CreateRolePermission() {
               Role Access
             </Typography>
             <FormControlLabel
-              control={<Switch name="dataAccess" />}
+              control={
+                <Switch
+                  name="dataAccess"
+                  checked={fullDataControl}
+                  onChange={handleDataControlChange}
+                />
+              }
               label={
                 <Typography variant="body2">
                   Organisation Full Data Access
@@ -52,7 +85,7 @@ export function CreateRolePermission() {
             >
               Assign Permissions
             </Typography>
-            <PermissionList />
+            <PermissionList permissionData={permissionList} />
           </Grid>
 
           <Grid item xs={12}>
@@ -60,8 +93,7 @@ export function CreateRolePermission() {
               <StyledButton
                 variant="text"
                 disableElevation
-                component={Link}
-                to="../SystemConfiguration/Roles"
+                onClick={() => navigate("/SystemConfiguration/Roles")}
               >
                 Cancel
               </StyledButton>
