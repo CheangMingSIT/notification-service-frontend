@@ -14,7 +14,9 @@ export async function DisableOrganisation({ params }) {
     }
   );
   if (!response.ok) {
-    throw response;
+    throw new Response("Failed to disable organisation", {
+      status: response.status,
+    });
   }
-  return redirect("/UserManagement/Organisation/Create");
+  return redirect("/UserManagement/Organisation");
 }

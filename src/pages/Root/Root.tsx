@@ -1,12 +1,13 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ConfigProvider, Layout } from "antd";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import { theme } from "../../assets/style";
 import { SideBarComponent } from "../../components";
 
 const { Content } = Layout;
 
 export function Root() {
+  const data = useLoaderData();
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -43,7 +44,7 @@ export function Root() {
           }}
         >
           <Layout style={{ minHeight: "100vh", background: "white" }}>
-            <SideBarComponent />
+            <SideBarComponent role={data} />
             <Content style={{ margin: 0, padding: 30 }}>
               <main>
                 <Outlet />

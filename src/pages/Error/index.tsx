@@ -4,7 +4,6 @@ import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 export function ErrorPage() {
   const error = useRouteError();
   if (isRouteErrorResponse(error) && error.status === 403) {
-    console.log("error", error);
     return <Result status="403" title="403" subTitle={error.data} />;
   }
   if (isRouteErrorResponse(error) && error.status === 404) {

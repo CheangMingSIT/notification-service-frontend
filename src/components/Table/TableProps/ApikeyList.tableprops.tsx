@@ -1,10 +1,7 @@
 import { TableProps } from "antd";
+import { ApiKeyDataTypes } from "../../../util";
 
-export interface ApikeyListDataTypes {
-  Name: string;
-  SecretKey: string;
-}
-export const ApikeyListColumn: TableProps<ApikeyListDataTypes>["columns"] = [
+export const ApikeyListColumn: TableProps<ApiKeyDataTypes>["columns"] = [
   {
     title: "Name",
     dataIndex: "name",
@@ -15,5 +12,10 @@ export const ApikeyListColumn: TableProps<ApikeyListDataTypes>["columns"] = [
     dataIndex: "secretKey",
     key: "secretKey",
     ellipsis: true,
+  },
+  {
+    title: "isDisabled",
+    dataIndex: "isDisabled",
+    key: "isDisabled",
   },
 ];

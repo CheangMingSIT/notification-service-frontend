@@ -6,7 +6,7 @@ export function OrganisationAdminSetup() {
   return (
     <FormContainer
       Header={"Admin"}
-      Subtitle={"Create admin"}
+      Subtitle={"Create Admin"}
       Linkname={"Organisation"}
     >
       <ValidatePasswords>

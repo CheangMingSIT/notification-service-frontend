@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Card, Col, ConfigProvider, Row } from "antd";
 
-export function Stats() {
+export function Stats({ data }) {
   return (
     <>
       <ConfigProvider
@@ -24,7 +24,7 @@ export function Stats() {
                 <Typography variant="subtitle1">Total Sent Request</Typography>
               </Row>
               <Row>
-                <Typography variant="h2">128</Typography>
+                <Typography variant="h2">{data.record}</Typography>
               </Row>
             </Card>
           </Col>
@@ -34,7 +34,7 @@ export function Stats() {
                 <Typography variant="subtitle1">Message In Queue</Typography>
               </Row>
               <Row>
-                <Typography variant="h2">12</Typography>
+                <Typography variant="h2">{data.InQueue}</Typography>
               </Row>
             </Card>
           </Col>
@@ -44,7 +44,7 @@ export function Stats() {
                 <Typography variant="subtitle1">Undelivered Message</Typography>
               </Row>
               <Row>
-                <Typography variant="h2">5</Typography>
+                <Typography variant="h2">{data.Fail}</Typography>
               </Row>
             </Card>
           </Col>

@@ -1,3 +1,15 @@
+export type OverviewDataTypes = {
+  data: {
+    record: number;
+    InQueue: number;
+    Fail: number;
+    month: string[];
+    countMonthData: number[];
+    undeliveredMonth: string[];
+    undeliveredCount: number[];
+  };
+};
+
 export type UserDataType = {
   data: {
     userId: string;
@@ -20,17 +32,23 @@ export type GetUserDataTypes = {
   };
 };
 
+export type RoleDropDownDataTypes = {
+  data: {
+    id: number;
+    role: string;
+  }[];
+};
+
 export type RoleDataType = {
   data: {
     id: number;
     role: string;
     isDisabled: boolean;
     hasFullDataControl: boolean;
-    rolePermission: {
-      permissionId: number;
-      operation: string;
-      resource: string;
-    }[];
+    organisation: {
+      id: string;
+      name: string;
+    };
   }[];
 };
 
@@ -62,6 +80,8 @@ export type ApiKeyDataTypes = {
     id: string;
     name: string;
     secretKey: string;
+    isDisabled: boolean;
+    organisationId: string;
   }[];
 };
 
@@ -79,20 +99,18 @@ export type OrganisationUserTypes = {
 
 export type OrganisationUserListDataTypes = {
   data: {
-    [organisationId: string]: {
-      id: string;
+    id: string;
+    name: string;
+    condition: object;
+    isDisabled: boolean;
+    users: {
+      userId: string;
       name: string;
-      condition: object;
+      role: string;
+      email: string;
       isDisabled: boolean;
-      users: {
-        userId: string;
-        name: string;
-        role: string;
-        email: string;
-        isDisabled: boolean;
-      }[];
-    };
-  };
+    }[];
+  }[];
 };
 export type OrganisationListDataTypes = {
   data: {

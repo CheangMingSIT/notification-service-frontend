@@ -14,6 +14,11 @@ export const roleListColumn: TableProps<RoleListDataTypes>["columns"] = [
     responsive: ["md"],
   },
   {
+    title: "Organisation Name",
+    dataIndex: "organisationName",
+    key: "organisationName",
+  },
+  {
     title: "Role",
     dataIndex: "role",
     key: "role",

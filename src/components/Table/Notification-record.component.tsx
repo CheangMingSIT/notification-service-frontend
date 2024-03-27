@@ -4,12 +4,10 @@ import { useNavigation } from "react-router-dom";
 import { NotificationRecordColumn, NotificationRecordDataTypes } from "..";
 import RecordDrawer from "../Drawer/Recorddrawer.component";
 
-export function NotificationRecord({ logs }) {
+export function NotificationRecord({ logs, pageHandler, page, pageSize }) {
   const navigation = useNavigation();
 
   const [open, setOpen] = useState(false);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
   const [selectedRowData, setSelectedRowData] =
     useState<NotificationRecordDataTypes | null>(null);
   const showDrawer = (record) => {
@@ -19,6 +17,9 @@ export function NotificationRecord({ logs }) {
   const onClose = () => {
     setOpen(false);
   };
+  const handlePageChange = (pagination) => {
+    pageHandler(pagination.current, pagination.pageSize);
+  };
   return (
     <>
       <Table
@@ -27,8 +28,9 @@ export function NotificationRecord({ logs }) {
           key: index,
           id: log.id,
           userId: log.userId,
-          secretKey:
-            log.secretKey.slice(0, 8) + "..." + log.secretKey.slice(-8),
+          secretKey: log.secretKey
+            ? log.secretKey.slice(0, 8) + "..." + log.secretKey.slice(-8)
+            : "No Secret Key",
           channel: log.channel,
           status: log.status,
           subject: log.subject,
@@ -41,15 +43,14 @@ export function NotificationRecord({ logs }) {
           style: { cursor: "pointer" },
           onClick: () => showDrawer(record),
         })}
+        onChange={handlePageChange}
         pagination={{
           showSizeChanger: true,
           total: logs.length,
+          defaultCurrent: 1,
+          defaultPageSize: 10,
           pageSize: pageSize,
           current: page,
-          onChange: (page, pageSize) => {
-            setPage(page);
-            setPageSize(pageSize);
-          },
         }}
       />
       <RecordDrawer

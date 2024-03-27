@@ -9,6 +9,11 @@ async function Loader() {
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+  if (response.status === 401 || response.status === 403) {
+    throw new Response("Unauthorized to access these roles", {
+      status: response.status,
+    });
+  }
   const data = await response.json();
   return data.data;
 }

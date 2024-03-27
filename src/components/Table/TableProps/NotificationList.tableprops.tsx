@@ -57,13 +57,9 @@ export const NotificationRecordColumn: TableProps<NotificationRecordDataTypes>["
               {status}
             </Tag>
           );
-        } else if (status === "QUEUE FAIL") {
+        } else if (status === "QUEUE FAIL" || status === "FAIL") {
           return (
-            <Tag
-              color="orange"
-              key={status}
-              icon={<ExclamationCircleOutlined />}
-            >
+            <Tag color="red" key={status} icon={<ExclamationCircleOutlined />}>
               {status}
             </Tag>
           );

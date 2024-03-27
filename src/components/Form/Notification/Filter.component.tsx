@@ -5,18 +5,15 @@ import {
   Stack,
   TextField,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { Form } from "react-router-dom";
 
-export function FilterForm() {
-  const theme = useTheme();
-
+export function FilterForm({ handleSearch }) {
   return (
     <>
-      <Box margin={theme.spacing(4)}>
-        <Form role="search" id="filter-logs" method="GET">
-          <Stack direction="column" spacing={theme.spacing(2)}>
+      <Box margin={4}>
+        <Form role="search" id="filter-logs" onSubmit={handleSearch}>
+          <Stack direction="column" spacing={2}>
             <Typography variant="h5" gutterBottom>
               Filter By
             </Typography>

@@ -14,7 +14,7 @@ export async function EnableOrganisation({ params }) {
     }
   );
   if (!response.ok) {
-    throw response;
+    throw new Response(response.statusText, { status: response.status });
   }
-  return redirect("/UserManagement/Organisation/Create");
+  return redirect("/UserManagement/Organisation");
 }

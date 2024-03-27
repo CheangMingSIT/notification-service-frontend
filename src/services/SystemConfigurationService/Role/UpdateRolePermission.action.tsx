@@ -1,3 +1,4 @@
+import { redirect } from "react-router-dom";
 import { userURL } from "../../../util";
 
 export async function UpdateRolePermissionAction({ request, params }) {
@@ -19,9 +20,11 @@ export async function UpdateRolePermissionAction({ request, params }) {
     }
   );
 
-  if (!response.ok) {
-    throw response;
+  if (response.status === 401 || response.status === 403) {
+    throw new Response("Unauthorized to update role permission", {
+      status: response.status,
+    });
   }
 
-  return await response.json();
+  return redirect("/SystemConfiguration/Roles");
 }

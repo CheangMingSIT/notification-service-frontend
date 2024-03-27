@@ -23,5 +23,5 @@ export async function createRoleAction({ request }) {
     return json({ error: "Strange...." }, response.status);
   }
 
-  return redirect("/SystemConfiguration/Roles");
+  return redirect("/SystemConfiguration/Hello");
 }

@@ -4,9 +4,7 @@ export async function userListLoader({ request }) {
   const url = new URL(request.url);
   const name = url.searchParams.get("user");
   const role = url.searchParams.get("role");
-  const userList = new URL(
-    `${userURL}/v1/api/notification-system/listUsers?page=1&limit=10`
-  );
+  const userList = new URL(`${userURL}/v1/api/notification-system/listUsers`);
   name && userList.searchParams.append("name", name);
   role && userList.searchParams.append("role", role);
   const response = await fetch(userList, {
@@ -15,6 +13,12 @@ export async function userListLoader({ request }) {
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+  if (response.status === 403) {
+    const error = await response.json();
+    throw new Response(error.message, {
+      status: response.status,
+    });
+  }
   const data: UserDataType = await response.json();
   const payload: UserDataType["data"] = [];
   data.data.map((user) => {

@@ -23,7 +23,7 @@ export function RoleConfiguration() {
       role: role.role,
       isDisabled: role.isDisabled,
       hasFullDataControl: role.hasFullDataControl,
-      rolePermission: role.rolePermission,
+      organisationName: role.organisation.name,
     };
   });
   const handleOpenDisable = (id: string) => {

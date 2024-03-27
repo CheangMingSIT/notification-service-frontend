@@ -1,5 +1,4 @@
 import {
-  BarChartOutlined,
   HomeOutlined,
   LogoutOutlined,
   ProfileOutlined,
@@ -22,30 +21,55 @@ function getItem(
   return { key, icon, children, label } as MenuItem;
 }
 
-export function SideBarComponent() {
+export function SideBarComponent({ role }) {
   const [collapsed, setCollapsed] = useState(true);
   const [collapsedWidth, setCollapsedWidth] = useState(80);
-  const items: MenuItem[] = [
-    getItem(<Link to="./Overview">Overview</Link>, "1", <HomeOutlined />),
-    getItem(
-      <Link to="./NotificationRecords">Notification Records</Link>,
-      "2",
-      <ProfileOutlined />
-    ),
-    getItem(<Link to="./Analytics">Analytics</Link>, "3", <BarChartOutlined />),
-    getItem("User Management", "4", <ManageAccountsOutlinedIcon />, [
-      getItem(<Link to="./UserManagement/Users">Users</Link>, "4.1"),
-      getItem(<Link to="./UserManagement/ApiKeys">ApiKeys</Link>, "4.2"),
+  let items: MenuItem[] = [];
+  if (role === "Owner") {
+    items = [
+      getItem(<Link to="./Overview">Overview</Link>, "1", <HomeOutlined />),
       getItem(
-        <Link to="./UserManagement/Organisation">Organisation</Link>,
-        "4.3"
+        <Link to="./NotificationRecords">Notification Records</Link>,
+        "2",
+        <ProfileOutlined />
       ),
-    ]),
-    getItem("Configuration", "5", <AdminPanelSettingsOutlined />, [
-      getItem(<Link to="./SystemConfiguration/Roles">Roles</Link>, "5.1"),
-    ]),
-    getItem(<Link to="./Logout">Logout</Link>, "6", <LogoutOutlined />),
-  ];
+      // getItem(<Link to="./Analytics">Analytics</Link>, "3", <BarChartOutlined />),
+      getItem("User Management", "4", <ManageAccountsOutlinedIcon />, [
+        getItem(
+          <Link to="./UserManagement/Organisation">Organisation</Link>,
+          "4.3"
+        ),
+      ]),
+      getItem(<Link to="./Logout">Logout</Link>, "6", <LogoutOutlined />),
+    ];
+  } else if (role === "Admin") {
+    items = [
+      getItem(<Link to="./Overview">Overview</Link>, "1", <HomeOutlined />),
+      getItem(
+        <Link to="./NotificationRecords">Notification Records</Link>,
+        "2",
+        <ProfileOutlined />
+      ),
+      getItem("User Management", "3", <ManageAccountsOutlinedIcon />, [
+        getItem(<Link to="./UserManagement/Users">Users</Link>, "3.1"),
+        getItem(<Link to="./UserManagement/ApiKeys">ApiKeys</Link>, "3.2"),
+      ]),
+      getItem("Configuration", "5", <AdminPanelSettingsOutlined />, [
+        getItem(<Link to="./SystemConfiguration/Roles">Roles</Link>, "5.1"),
+      ]),
+      getItem(<Link to="./Logout">Logout</Link>, "6", <LogoutOutlined />),
+    ];
+  } else if (role === "Operator") {
+    items = [
+      getItem(<Link to="./Overview">Overview</Link>, "1", <HomeOutlined />),
+      getItem(
+        <Link to="./NotificationRecords">Notification Records</Link>,
+        "2",
+        <ProfileOutlined />
+      ),
+      getItem(<Link to="./Logout">Logout</Link>, "6", <LogoutOutlined />),
+    ];
+  }
 
   return (
     <>

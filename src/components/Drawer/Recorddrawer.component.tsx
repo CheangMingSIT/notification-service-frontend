@@ -3,6 +3,10 @@ import { Drawer } from "antd";
 
 function RecordDrawer({ open, onClose, selectedRowData }) {
   const theme = useTheme();
+  const createMarkup = (message) => {
+    return { __html: message };
+  };
+
   return (
     <>
       <Drawer
@@ -45,13 +49,23 @@ function RecordDrawer({ open, onClose, selectedRowData }) {
           </Box>
           <Box>
             <Typography variant="subtitle1">Message</Typography>
-            <Typography
-              variant="body1"
-              sx={{ fontWeight: 500 }}
-              align="justify"
-            >
-              {selectedRowData?.message}
-            </Typography>
+            {selectedRowData?.channel === "Email" ? (
+              <>
+                <div
+                  dangerouslySetInnerHTML={createMarkup(
+                    selectedRowData?.message
+                  )}
+                />
+              </>
+            ) : (
+              <Typography
+                variant="body1"
+                sx={{ fontWeight: 500 }}
+                align="justify"
+              >
+                {selectedRowData?.message}
+              </Typography>
+            )}
           </Box>
         </Stack>
       </Drawer>

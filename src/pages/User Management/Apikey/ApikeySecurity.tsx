@@ -1,6 +1,6 @@
 import { ContentCopyOutlined } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import BlockIcon from "@mui/icons-material/Block";
 import {
   Alert,
   Box,
@@ -27,7 +27,8 @@ import { StyledButton, StyledDialog } from "../../../assets/style";
 import {
   ApikeyListColumn,
   CreateApiKey,
-  DeleteModal,
+  DisableModal,
+  EnableModal,
   Record,
 } from "../../../components";
 import { ApiKeyDataTypes } from "../../../util";
@@ -35,10 +36,11 @@ import { ApiKeyDataTypes } from "../../../util";
 export function ApiKeySecurity() {
   const { spacing } = useTheme();
   const submit = useSubmit();
-  const data = useLoaderData() as ApiKeyDataTypes;
+  const { data } = useLoaderData() as ApiKeyDataTypes;
   const secretKey = useActionData() as string;
   const [openGenerate, setOpenGenerate] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
+  const [openDisable, setOpenDisable] = useState(false);
+  const [openEnable, setOpenEnable] = useState(false);
   const [apikeyId, setApikeyId] = useState("");
   const [openSecretKey, setOpenSecretkey] = useState(false);
   const [alert, setAlert] = useState("");
@@ -46,24 +48,47 @@ export function ApiKeySecurity() {
 
   const handleOpenGenerate = () => setOpenGenerate(true);
   const handleCloseGenerate = () => setOpenGenerate(false);
-  const handleOpenDelete = (id: string) => {
-    setOpenDelete(true);
+  const handleOpenDisable = (id: string) => {
+    setOpenDisable(true);
     setApikeyId(id);
   };
-  const handleCloseDelete = () => setOpenDelete(false);
+  const handleCloseDisable = () => setOpenDisable(false);
+
+  const handleOpenEnable = (id: string) => {
+    setOpenEnable(true);
+    setApikeyId(id);
+  };
+  const handleCloseEnable = () => setOpenEnable(false);
+
   const handleOpenSecretKey = () => {
     setOpenSecretkey(true);
     handleCloseGenerate();
   };
   const handleCloseSecretKey = () => setOpenSecretkey(false);
 
-  const apikeyData = data.data.map((item) => {
-    return {
-      id: item.id,
-      name: item.name,
-      secretKey:
-        item.secretKey.slice(0, 8) + "xxxxxxxxxxxx" + item.secretKey.slice(-8),
-    };
+  const apikeyData = data.map((item) => {
+    let isDisabled = item.isDisabled.toString();
+    if (item.isDisabled === true) {
+      return {
+        id: item.id,
+        name: `${item.name} (Disabled)`,
+        isDisabled: isDisabled,
+        secretKey: `${item.secretKey.slice(
+          0,
+          8
+        )}xxxxxxxxxxxx${item.secretKey.slice(-8)}`,
+      };
+    } else {
+      return {
+        id: item.id,
+        name: item.name,
+        isDisabled: isDisabled,
+        secretKey: `${item.secretKey.slice(
+          0,
+          8
+        )}xxxxxxxxxxxx${item.secretKey.slice(-8)}`,
+      };
+    }
   });
 
   const alertBox = (alertType: string) => {
@@ -230,16 +255,31 @@ export function ApiKeySecurity() {
               title: "Actions",
               key: "Action",
               align: "center",
-              render: (apikey, _) => (
-                <IconButton
-                  color="error"
-                  size="small"
-                  onClick={() => handleOpenDelete(apikey.id)}
-                  key="delete-icon"
-                >
-                  <DeleteOutlineOutlinedIcon />
-                </IconButton>
-              ),
+              render: (apikey, _) => {
+                if (apikey.isDisabled === "false") {
+                  return (
+                    <IconButton
+                      color="error"
+                      size="small"
+                      onClick={() => handleOpenDisable(apikey.id)}
+                      key="disable-icon"
+                    >
+                      <BlockIcon />
+                    </IconButton>
+                  );
+                }
+                return (
+                  <Button
+                    variant="text"
+                    color="success"
+                    size="small"
+                    key="enable-icon"
+                    onClick={() => handleOpenEnable(apikey.id)}
+                  >
+                    Enable
+                  </Button>
+                );
+              },
             },
           ]}
           data={apikeyData}
@@ -247,10 +287,15 @@ export function ApiKeySecurity() {
           rowKey={(apiKeys) => apiKeys.id}
         />
       </Box>
-      <DeleteModal
-        action={`${apikeyId}/delete`}
-        openDelete={openDelete}
-        handleCloseDelete={handleCloseDelete}
+      <DisableModal
+        action={`${apikeyId}/disable`}
+        openDisable={openDisable}
+        handleCloseDisable={handleCloseDisable}
+      />
+      <EnableModal
+        action={`${apikeyId}/enable`}
+        openEnable={openEnable}
+        handleCloseEnable={handleCloseEnable}
       />
     </>
   );

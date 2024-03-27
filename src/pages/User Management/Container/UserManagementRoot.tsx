@@ -1,6 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import {
   Box,
+  DialogTitle,
   Grid,
   IconButton,
   Tooltip,
@@ -8,69 +9,72 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Link, Outlet, useLocation } from "react-router-dom";
-import { StyledButton } from "../../../assets/style";
+import { useState } from "react";
+import { Form, Outlet, useLocation } from "react-router-dom";
+import { StyledButton, StyledDialog } from "../../../assets/style";
+import { OrganisationForm } from "../../../components";
 
 export function UserManagementRoot() {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const generateNewOrganisation = () => {
-    if (isMobile) {
-      return (
-        <Tooltip title="Create/Edit organisation">
-          <IconButton
-            component={Link}
-            to={"/UserManagement/Organisation/Create"}
-            aria-label="generate new organisation"
-            size="large"
-            color="primary"
-          >
-            <AddIcon />
-          </IconButton>
-        </Tooltip>
-      );
-    } else {
-      return (
-        <StyledButton
-          component={Link}
-          to={"/UserManagement/Organisation/Create"}
-          variant="contained"
-          disableElevation
-          startIcon={<AddIcon />}
+  const [openCreate, setOpenCreate] = useState(false);
+
+  const handleOpenCreate = () => setOpenCreate(true);
+  const handleCloseCreate = () => setOpenCreate(false);
+  const generateNewOrganisation = (isMobile) => {
+    return isMobile ? (
+      <Tooltip title="Create organisation">
+        <IconButton
+          aria-label="generate new organisation"
+          size="large"
+          color="primary"
         >
-          Create/Edit Organisation
-        </StyledButton>
-      );
-    }
+          <AddIcon />
+        </IconButton>
+      </Tooltip>
+    ) : (
+      <StyledButton
+        variant="contained"
+        disableElevation
+        onClick={handleOpenCreate}
+        startIcon={<AddIcon />}
+      >
+        Create Organisation
+      </StyledButton>
+    );
   };
+
   const page = () => {
-    if (location.pathname.startsWith("/UserManagement/Users")) {
-      return (
-        <Typography variant="h5" fontWeight={700}>
-          Users
-        </Typography>
-      );
-    } else if (location.pathname.startsWith("/UserManagement/ApiKeys")) {
-      return (
-        <Typography variant="h5" fontWeight={700}>
-          API Keys
-        </Typography>
-      );
-    } else if (location.pathname.startsWith("/UserManagement/Organisation")) {
-      return (
-        <Grid container spacing={2}>
-          <Grid item xs={6} sm={6} md={8} lg={9}>
-            <Typography variant="h5" fontWeight={700}>
-              Organisation
-            </Typography>
+    switch (true) {
+      case location.pathname.startsWith("/UserManagement/Users"):
+        return (
+          <Typography variant="h5" fontWeight={700}>
+            Users
+          </Typography>
+        );
+      case location.pathname.startsWith("/UserManagement/ApiKeys"):
+        return (
+          <Typography variant="h5" fontWeight={700}>
+            API Keys
+          </Typography>
+        );
+      case location.pathname.startsWith("/UserManagement/Organisation"):
+        return (
+          <Grid container spacing={2}>
+            <Grid item xs={6} sm={6} md={8} lg={9}>
+              <Typography variant="h5" fontWeight={700}>
+                Organisation
+              </Typography>
+            </Grid>
+            <Grid item xs={6} sm={6} md={4} lg={3} textAlign={"right"}>
+              {generateNewOrganisation(isMobile)}
+            </Grid>
           </Grid>
-          <Grid item xs={6} sm={6} md={4} lg={3} textAlign={"right"}>
-            {generateNewOrganisation()}
-          </Grid>
-        </Grid>
-      );
+        );
+      default:
+        return null;
     }
   };
 
@@ -79,6 +83,12 @@ export function UserManagementRoot() {
       {page()}
       <Box marginTop={theme.spacing(8)}>
         <Outlet />
+        <StyledDialog open={openCreate} onClose={handleCloseCreate} fullWidth>
+          <Form method="POST">
+            <DialogTitle>Create Organisation</DialogTitle>
+            <OrganisationForm closeCreate={handleCloseCreate} />
+          </Form>
+        </StyledDialog>
       </Box>
     </>
   );

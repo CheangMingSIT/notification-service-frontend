@@ -15,7 +15,6 @@ import {
 } from "./pages/System Configuration";
 import {
   ApiKeySecurity,
-  CreateOrganisation,
   Organisation,
   OrganisationAdminSetup,
   UserCreate,
@@ -33,24 +32,28 @@ import {
   GetRoleLoader,
   GetUserLoader,
   GroupUsersByOrganisation,
-  OrganisationList,
+  MenuLoader,
   ToggleRoleStatusAction,
+  UpdateOrganisation,
   UpdateRolePermissionAction,
   UpdateUserAction,
   apiKeyListLoader,
   createApiKeyAction,
   createRoleAction,
-  deleteApiKeyAction,
+  disableApiKeyAction,
+  enableApiKeyAction,
   forgotPasswordAction,
   loginAction,
+  overviewLoader,
   permissionListLoader,
   registrationAction,
   resetPasswordAction,
+  roleDropDownLoader,
   roleListLoader,
   searchLogsLoader,
   userListLoader,
 } from "./services";
-import { checkToken, logoutLoader } from "./util";
+import { logoutLoader } from "./util";
 
 const router = createBrowserRouter([
   {
@@ -83,16 +86,19 @@ const router = createBrowserRouter([
   },
   {
     element: <Root />,
-    loader: checkToken,
+    loader: MenuLoader,
     children: [
       {
         path: "/Overview",
         index: true,
         element: <Overview />,
+        errorElement: <ErrorPage />,
+        loader: overviewLoader,
       },
       {
         path: "/NotificationRecords",
         element: <Records />,
+        errorElement: <ErrorPage />,
         loader: searchLogsLoader,
       },
       {
@@ -102,10 +108,13 @@ const router = createBrowserRouter([
       {
         path: "/UserManagement",
         element: <UserManagementRoot />,
+        action: CreateOrganisationAction,
         errorElement: <ErrorPage />,
-        id: "role-dropdown",
-        loader: roleListLoader,
         children: [
+          {
+            id: "role-dropdown",
+            loader: roleListLoader,
+          },
           {
             path: "Users",
             element: <UserSecurity />,
@@ -128,8 +137,12 @@ const router = createBrowserRouter([
             action: createApiKeyAction,
             children: [
               {
-                path: ":id/delete",
-                action: deleteApiKeyAction,
+                path: ":id/disable",
+                action: disableApiKeyAction,
+              },
+              {
+                path: ":id/enable",
+                action: enableApiKeyAction,
               },
             ],
           },
@@ -137,6 +150,17 @@ const router = createBrowserRouter([
             path: "Organisation",
             element: <Organisation />,
             loader: GroupUsersByOrganisation,
+            action: UpdateOrganisation,
+            children: [
+              {
+                path: ":organisationId/disable",
+                action: DisableOrganisation,
+              },
+              {
+                path: ":organisationId/enable",
+                action: EnableOrganisation,
+              },
+            ],
           },
         ],
       },
@@ -145,6 +169,7 @@ const router = createBrowserRouter([
         element: <ConfigurationRoot />,
         id: "role-id",
         loader: roleListLoader,
+        errorElement: <ErrorPage />,
         children: [
           {
             path: "Roles",
@@ -165,7 +190,8 @@ const router = createBrowserRouter([
       {
         path: "/UserManagement/Users/Create",
         element: <UserCreate />,
-        loader: roleListLoader,
+        errorElement: <ErrorPage />,
+        loader: roleDropDownLoader,
         action: registrationAction,
       },
       {
@@ -197,23 +223,6 @@ const router = createBrowserRouter([
             element: <EditRole />,
             loader: permissionListLoader,
             action: UpdateRolePermissionAction,
-          },
-        ],
-      },
-      {
-        path: "/UserManagement/Organisation/Create",
-        element: <CreateOrganisation />,
-        errorElement: <ErrorPage />,
-        loader: OrganisationList,
-        action: CreateOrganisationAction,
-        children: [
-          {
-            path: ":organisationId/disable",
-            action: DisableOrganisation,
-          },
-          {
-            path: ":organisationId/enable",
-            action: EnableOrganisation,
           },
         ],
       },
