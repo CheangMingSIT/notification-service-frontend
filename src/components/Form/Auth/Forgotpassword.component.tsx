@@ -7,18 +7,15 @@ import {
   Stack,
   TextField,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { Form, useNavigation } from "react-router-dom";
 
 export function ForgotPasswordForm({ redirectToLoginPage }) {
-  const theme = useTheme();
   const nav = useNavigation();
-
   return (
     <>
       <Form method="post">
-        <Stack spacing={theme.spacing(4)} useFlexGap>
+        <Stack spacing={4} useFlexGap>
           <Box>
             <label htmlFor="email">
               <Typography variant="body1" gutterBottom>

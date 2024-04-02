@@ -17,7 +17,6 @@ async function Loader(operation, resource) {
   data.data.forEach((element, index) => {
     element.key = index + 1;
   });
-
   return data.data;
 }
 export async function permissionListLoader({ request }) {

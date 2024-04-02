@@ -1,3 +1,2 @@
-export * from "./ForgotPassword/ForgotPassword";
-export * from "./ForgotPassword/ResetPassword";
+export * from "./ForgotPassword";
 export * from "./Login/Login";

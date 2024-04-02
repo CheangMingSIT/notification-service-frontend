@@ -1,6 +1,11 @@
+import { redirect } from "react-router-dom";
 import { userURL } from "../../util";
 
 export async function MenuLoader() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return redirect("/");
+  }
   const response = await fetch(
     `${userURL}/v1/api/notification-system/getRole`,
     {

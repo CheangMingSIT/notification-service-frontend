@@ -13,8 +13,13 @@ import { useContext, useState } from "react";
 import { StyledButton } from "../../../assets/style";
 import { PasswordValidationContext } from "../../../util";
 export function RegistrationForm({ rolelist }) {
-  const { handlePasswordChange, handleConfirmPasswordChange, passwordsMatch } =
-    useContext(PasswordValidationContext);
+  const {
+    handlePasswordChange,
+    handleConfirmPasswordChange,
+    passwordsMatch,
+    passwordStrength,
+  } = useContext(PasswordValidationContext);
+
   const [role, setRole] = useState("");
   const handleRoleChange = (event: SelectChangeEvent) => {
     setRole(event.target.value);
@@ -99,10 +104,24 @@ export function RegistrationForm({ rolelist }) {
             fullWidth
             required
             type="password"
+            autoComplete="new-password"
             name="password"
             error={!passwordsMatch}
             onChange={handlePasswordChange}
           />
+          <Typography
+            padding={2}
+            variant="caption"
+            color={
+              passwordStrength === "Weak"
+                ? "error"
+                : passwordStrength === "Medium"
+                ? "text.secondary"
+                : "green"
+            }
+          >
+            Password Strength: {passwordStrength}
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
           <FormLabel htmlFor="confirmPassword">
@@ -115,6 +134,7 @@ export function RegistrationForm({ rolelist }) {
             placeholder="Confirm Password"
             fullWidth
             required
+            autoComplete="new-password"
             type="password"
             name="confirmPassword"
             error={!passwordsMatch}
@@ -130,6 +150,7 @@ export function RegistrationForm({ rolelist }) {
             type="submit"
             disableElevation
             startIcon={<AddIcon />}
+            disabled={!passwordsMatch || passwordStrength === "Weak"}
           >
             Register
           </StyledButton>

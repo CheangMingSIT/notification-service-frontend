@@ -65,7 +65,7 @@ export function LoginRoot() {
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: "50px",
+            borderRadius: "30px",
           },
           text: {
             "&:hover": {
@@ -94,7 +94,6 @@ export function LoginRoot() {
             display: "block",
             padding: 0,
             margin: 0,
-            height: "100vh",
             backgroundColor: theme.palette.background.default,
           }}
         >

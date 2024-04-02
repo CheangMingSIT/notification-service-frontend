@@ -29,7 +29,6 @@ export async function userListLoader({ request }) {
         email: user.email,
         role: user.role,
         isDisabled: user.isDisabled,
-        roleId: user.roleId,
       });
     } else {
       payload.push({
@@ -38,7 +37,6 @@ export async function userListLoader({ request }) {
         email: user.email,
         role: user.role,
         isDisabled: user.isDisabled,
-        roleId: user.roleId,
       });
     }
   });

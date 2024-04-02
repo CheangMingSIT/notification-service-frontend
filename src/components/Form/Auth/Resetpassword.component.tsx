@@ -12,12 +12,17 @@ import { PasswordValidationContext } from "../../../util";
 
 export function ResetPasswordForm() {
   const theme = useTheme();
-  const { handlePasswordChange, handleConfirmPasswordChange, passwordsMatch } =
-    useContext(PasswordValidationContext);
+  const {
+    handlePasswordChange,
+    handleConfirmPasswordChange,
+    passwordsMatch,
+    passwordStrength,
+  } = useContext(PasswordValidationContext);
+
   return (
     <>
       <Form method="post">
-        <Stack spacing={theme.spacing(4)} useFlexGap>
+        <Stack spacing={2} useFlexGap>
           <Box>
             <label htmlFor="newPassword">
               <Typography variant="body1" gutterBottom>
@@ -31,9 +36,23 @@ export function ResetPasswordForm() {
               placeholder="New Password"
               fullWidth
               required
+              style={{ paddingBottom: theme.spacing(1) }}
               error={!passwordsMatch}
               onChange={handlePasswordChange}
             />
+            <Typography
+              padding={2}
+              variant="caption"
+              color={
+                passwordStrength === "Weak"
+                  ? "error"
+                  : passwordStrength === "Medium"
+                  ? "gray"
+                  : "green"
+              }
+            >
+              Password Strength: {passwordStrength}
+            </Typography>
           </Box>
           <Box>
             <label htmlFor="confirmPassword">
@@ -55,7 +74,19 @@ export function ResetPasswordForm() {
               onChange={handleConfirmPasswordChange}
             />
           </Box>
-          <Button type="submit" fullWidth variant="contained" disableElevation>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disableElevation
+            sx={{
+              "&:disabled": {
+                backgroundColor: "#CDD9DE",
+                color: "grey",
+              },
+            }}
+            disabled={!passwordsMatch || passwordStrength === "Weak"}
+          >
             Change Password
           </Button>
         </Stack>

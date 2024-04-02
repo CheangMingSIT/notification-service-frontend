@@ -1,4 +1,4 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { ConfigProvider, Layout } from "antd";
 import { Outlet, useLoaderData } from "react-router-dom";
 import { theme } from "../../assets/style";
@@ -8,8 +8,14 @@ const { Content } = Layout;
 
 export function Root() {
   const data = useLoaderData();
+  const sm = useMediaQuery(theme.breakpoints.down("sm"));
+  let siderMarginLeft = 80;
+  if (sm) {
+    siderMarginLeft = 0;
+  }
   return (
     <>
+      {}
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ConfigProvider
@@ -43,9 +49,13 @@ export function Root() {
             },
           }}
         >
-          <Layout style={{ minHeight: "100vh", background: "white" }}>
+          <Layout hasSider>
             <SideBarComponent role={data} />
-            <Content style={{ margin: 0, padding: 30 }}>
+          </Layout>
+          <Layout
+            style={{ marginLeft: siderMarginLeft, backgroundColor: "white" }}
+          >
+            <Content style={{ padding: 30 }}>
               <main>
                 <Outlet />
               </main>

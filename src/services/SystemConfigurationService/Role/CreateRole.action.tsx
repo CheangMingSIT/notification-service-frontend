@@ -1,4 +1,4 @@
-import { json, redirect } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { userURL } from "../../../util";
 
 export async function createRoleAction({ request }) {
@@ -7,7 +7,6 @@ export async function createRoleAction({ request }) {
   const permission = data.getAll("permissions");
   const organisationDataAccess = data.get("dataAccess");
   const hasFullDataControl = organisationDataAccess !== null;
-
   const response = await fetch(
     `${userURL}/v1/api/notification-system/createRolePermission`,
     {
@@ -19,9 +18,10 @@ export async function createRoleAction({ request }) {
       body: JSON.stringify({ role, hasFullDataControl, permission }),
     }
   );
-  if (!response.ok) {
-    return json({ error: "Strange...." }, response.status);
+  if (response.status === 401 || response.status === 403) {
+    throw new Response("Unauthorized to create role", {
+      status: response.status,
+    });
   }
-
-  return redirect("/SystemConfiguration/Hello");
+  return redirect("/SystemConfiguration/Roles");
 }

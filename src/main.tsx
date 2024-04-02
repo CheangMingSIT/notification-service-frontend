@@ -1,17 +1,21 @@
-import { Result } from "antd";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { ForgotPassword, Login, ResetPassword } from "./pages/Authentication";
+import {
+  ForgotPassword,
+  Login,
+  ResetPassword,
+  ResetSuccessful,
+} from "./pages/Authentication";
 import { ErrorPage } from "./pages/Error";
 import { Overview } from "./pages/Overview";
 import { Records } from "./pages/Records";
 import { LoginRoot, Root } from "./pages/Root";
 import {
   ConfigurationRoot,
-  CreateRole,
   EditRole,
   RoleConfiguration,
+  RoleCreation,
 } from "./pages/System Configuration";
 import {
   ApiKeySecurity,
@@ -31,6 +35,7 @@ import {
   EnableUserAction,
   GetRoleLoader,
   GetUserLoader,
+  GroupPermission,
   GroupUsersByOrganisation,
   MenuLoader,
   ToggleRoleStatusAction,
@@ -45,7 +50,6 @@ import {
   forgotPasswordAction,
   loginAction,
   overviewLoader,
-  permissionListLoader,
   registrationAction,
   resetPasswordAction,
   roleDropDownLoader,
@@ -53,19 +57,13 @@ import {
   searchLogsLoader,
   userListLoader,
 } from "./services";
-import { logoutLoader } from "./util";
+import { Logout } from "./util";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LoginRoot />,
-    errorElement: (
-      <Result
-        status="404"
-        title="404"
-        subTitle="Sorry, the page you visited does not exist."
-      />
-    ),
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -82,11 +80,16 @@ const router = createBrowserRouter([
         element: <ResetPassword />,
         action: resetPasswordAction,
       },
+      {
+        path: "reset-successfully",
+        element: <ResetSuccessful />,
+      },
     ],
   },
   {
     element: <Root />,
     loader: MenuLoader,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/Overview",
@@ -110,11 +113,9 @@ const router = createBrowserRouter([
         element: <UserManagementRoot />,
         action: CreateOrganisationAction,
         errorElement: <ErrorPage />,
+        id: "role-dropdown",
+        loader: roleDropDownLoader,
         children: [
-          {
-            id: "role-dropdown",
-            loader: roleListLoader,
-          },
           {
             path: "Users",
             element: <UserSecurity />,
@@ -169,7 +170,6 @@ const router = createBrowserRouter([
         element: <ConfigurationRoot />,
         id: "role-id",
         loader: roleListLoader,
-        errorElement: <ErrorPage />,
         children: [
           {
             path: "Roles",
@@ -190,7 +190,6 @@ const router = createBrowserRouter([
       {
         path: "/UserManagement/Users/Create",
         element: <UserCreate />,
-        errorElement: <ErrorPage />,
         loader: roleDropDownLoader,
         action: registrationAction,
       },
@@ -198,7 +197,6 @@ const router = createBrowserRouter([
         path: "/UserManagement/Users/:userId",
         id: "user-id",
         loader: GetUserLoader,
-        errorElement: <ErrorPage />,
         children: [
           {
             path: "edit",
@@ -209,8 +207,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/SystemConfiguration/Roles/Create",
-        element: <CreateRole />,
-        loader: permissionListLoader,
+        element: <RoleCreation />,
+        loader: GroupPermission,
         action: createRoleAction,
       },
       {
@@ -221,7 +219,7 @@ const router = createBrowserRouter([
           {
             path: "edit",
             element: <EditRole />,
-            loader: permissionListLoader,
+            loader: GroupPermission,
             action: UpdateRolePermissionAction,
           },
         ],
@@ -238,7 +236,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/Logout",
-        loader: logoutLoader,
+        loader: Logout,
       },
     ],
   },

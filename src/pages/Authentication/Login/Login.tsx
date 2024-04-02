@@ -1,19 +1,21 @@
-import { Grid, Typography, useTheme } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useActionData, useNavigate } from "react-router-dom";
 import { LoginForm } from "../../../components";
 
 export function Login() {
-  const theme = useTheme();
   const navigate = useNavigate();
   const handleForgetPassword = () => {
     navigate("/forgot-password");
   };
-  const errorResponse = useActionData();
+
+  const response = useActionData();
   const [incorrectPassword, setIncorrectPassword] = useState(false);
   useEffect(() => {
-    errorResponse ? setIncorrectPassword(true) : setIncorrectPassword(false);
-  }, [errorResponse]);
+    response === "Unauthorized"
+      ? setIncorrectPassword(true)
+      : setIncorrectPassword(false);
+  }, [Response]);
   return (
     <>
       <Grid
@@ -21,7 +23,7 @@ export function Login() {
         alignItems="center"
         justifyItems="center"
         columnSpacing={2}
-        style={{ minHeight: "100vh" }}
+        minHeight={"100vh"}
       >
         <Grid item md={6} xs={12}>
           <Typography variant="h4" gutterBottom>

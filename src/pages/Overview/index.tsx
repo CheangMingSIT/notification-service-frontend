@@ -10,17 +10,9 @@ export function Overview() {
   window.addEventListener("resize", () => {
     setMaxWidth(window.innerWidth - 125);
   });
-  return (
-    <>
-      <Box>
-        <Typography variant="h3">Overview</Typography>
-      </Box>
-      <Box style={{ marginTop: "2rem" }}>
-        <Typography variant="h6">Today's Stats</Typography>
-      </Box>
-      <Stats data={data} />
-      <Box style={{ marginTop: "2rem" }}>
-        <Typography variant="h6">Dashboard</Typography>
+  const displayBarChart = () => {
+    if (data.countMonthData.length > 0 || data.undeliveredCount.length > 0) {
+      return (
         <BarChart
           colors={["#236784", "#89BBCF"]}
           xAxis={[
@@ -50,8 +42,23 @@ export function Overview() {
               padding: 0,
             },
           }}
-          height={400}
+          height={450}
         />
+      );
+    }
+  };
+  return (
+    <>
+      <Box>
+        <Typography variant="h3">Overview</Typography>
+      </Box>
+      <Box style={{ marginTop: "2rem" }}>
+        <Typography variant="h6">Today's Stats</Typography>
+      </Box>
+      <Stats data={data} />
+      <Box style={{ marginTop: "2rem" }}>
+        <Typography variant="h6">Dashboard</Typography>
+        {displayBarChart()}
       </Box>
     </>
   );

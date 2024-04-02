@@ -92,10 +92,11 @@ export function Records() {
             </Popover>
           </Row>
           <NotificationRecord
-            logs={data}
+            logs={data.payload}
             pageHandler={handlePage}
             page={page}
             pageSize={pageSize}
+            totalCount={data.totalCount}
           />
         </Col>
       </Row>

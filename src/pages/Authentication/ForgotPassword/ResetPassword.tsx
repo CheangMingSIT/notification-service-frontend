@@ -1,20 +1,19 @@
-import { Box, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { ResetPasswordForm } from "../../../components";
 import { ValidatePasswords } from "../../../util";
 
 export function ResetPassword() {
-  const theme = useTheme();
   return (
     <>
       <Grid
         container
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: "100vh" }}
+        minHeight={"100vh"}
       >
-        <Grid item xs={18} md={12} lg={6}>
+        <Grid item xs={12} md={12} lg={6}>
           <Typography variant="h4">Reset Password</Typography>
-          <Box marginTop={theme.spacing(4)}>
+          <Box marginTop={4}>
             <ValidatePasswords>
               <ResetPasswordForm />
             </ValidatePasswords>

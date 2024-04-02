@@ -1,33 +1,50 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
-  Box,
   DialogTitle,
   IconButton,
   Menu,
   MenuItem,
   Typography,
 } from "@mui/material";
-import { List } from "antd";
+import { List, Table } from "antd";
+import { ColumnsType } from "antd/es/table";
 import { useState } from "react";
 import { Form, Link, useLoaderData, useSubmit } from "react-router-dom";
 import { StyledDialog } from "../../../assets/style";
 import {
   DisableModal,
   EnableModal,
+  OrganisationColumn,
   OrganisationForm,
 } from "../../../components";
 import { OrganisationUserListDataTypes } from "../../../util";
-
 export function Organisation() {
   const { data } = useLoaderData() as OrganisationUserListDataTypes;
-  const submit = useSubmit();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [organisationId, setOrganisationId] = useState("");
   const [openEditOrganisation, setOpenEditOrganisation] = useState(false);
-
   const [openDisable, setOpenDisable] = useState(false);
   const [openEnable, setOpenEnable] = useState(false);
-  const [organisationId, setOrganisationId] = useState("");
-  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const submit = useSubmit();
+
+  const payload = data.map((item) => {
+    if (item.isDisabled === true) {
+      return {
+        id: item.id,
+        name: `${item.name} (Disabled)`,
+        isDisabled: item.isDisabled,
+        users: item.users,
+      };
+    }
+    return {
+      id: item.id,
+      name: item.name,
+      isDisabled: item.isDisabled,
+      users: item.users,
+    };
+  });
+
   const handleMenuClick = (
     event: React.MouseEvent<HTMLButtonElement>,
     menuId: string
@@ -41,31 +58,15 @@ export function Organisation() {
   };
   const handleMenuClose = () => {
     setAnchorEl(null);
-    setOpenMenuId(null); // Close the menu by resetting openMenuId
+    setOpenMenuId(null);
   };
+
   const handleOpenEditOrganisation = (id: string) => {
     setOpenEditOrganisation(true);
     setOrganisationId(id);
     handleMenuClose();
   };
-
   const handleCloseEditOrganisaion = () => setOpenEditOrganisation(false);
-
-  const handleSubmitEditOrganisation = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const data = Object.fromEntries(formData) as Record<string, string>;
-    const organisationName = data.organisationName;
-    submit(
-      {
-        organisationName,
-        organisationId,
-      },
-      { method: "PATCH" }
-    );
-  };
 
   const handleOpenDisable = (id: string) => {
     setOpenDisable(true);
@@ -87,95 +88,121 @@ export function Organisation() {
     setOrganisationId("");
   };
 
-  const header = (organisation, index) => {
-    const menuId = `organisation-menu-${organisation.id}-${index}`;
+  const handleSubmitEditOrganisation = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data = Object.fromEntries(formData) as Record<string, string>;
+    const organisationName = data.organisationName;
+    submit(
+      {
+        organisationName,
+        organisationId,
+      },
+      { method: "PATCH" }
+    );
+  };
+
+  const expandRecord = (users) => {
     return (
       <>
-        <Box
-          key={organisation.id}
-          display="flex"
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          <Typography variant="h6" fontWeight={700}>
-            {organisation.name} {organisation.isDisabled ? "(Disabled)" : null}
-          </Typography>
-          <IconButton
-            aria-label="more"
-            id={menuId}
-            aria-expanded={openMenuId === menuId ? "true" : undefined}
-            onClick={(event) => handleMenuClick(event, menuId)}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id={menuId}
-            anchorEl={anchorEl}
-            open={openMenuId === menuId}
-            onClose={handleMenuClose}
-          >
-            <MenuItem
-              id={`AddAdmin-${organisation.id}`}
-              component={Link}
-              onClick={handleMenuClose}
-              to={`CreateAdmin/${organisation.id}`}
-            >
-              Add Admin
-            </MenuItem>
-            <MenuItem
-              id={`EditOrganisation-${organisation.id}`}
-              onClick={() => handleOpenEditOrganisation(organisation.id)}
-            >
-              Edit Organisation
-            </MenuItem>
-            {organisation.isDisabled ? (
-              <MenuItem
-                id={`Enable-${organisation.id}`}
-                onClick={() => handleOpenEnable(organisation.id)}
-              >
-                Enable {organisation.name}
-              </MenuItem>
-            ) : (
-              <MenuItem
-                id={`Disable-${organisation.id}`}
-                onClick={() => handleOpenDisable(organisation.id)}
-              >
-                Disable {organisation.name}
-              </MenuItem>
-            )}
-          </Menu>
-        </Box>
+        <Typography variant="body1" gutterBottom fontWeight={500}>
+          Admin
+        </Typography>
+        <List
+          size="small"
+          dataSource={users}
+          renderItem={(
+            item: { userId; name; email; role; isDisabled },
+            index
+          ) => (
+            <List.Item key={index}>
+              <List.Item.Meta title={item.name} description={item.email} />
+            </List.Item>
+          )}
+        />
       </>
     );
   };
   return (
     <>
-      {data.map((organisation, index) => {
-        return (
-          <List
-            id={organisation.id}
-            rowKey={(item) => item.userId}
-            header={header(organisation, index)}
-            bordered
-            style={{ marginBottom: "20px" }}
-            dataSource={organisation.users}
-            renderItem={(user, index) => (
-              <List.Item key={index}>
-                <List.Item.Meta
-                  title={
-                    <Typography variant="subtitle2" fontWeight={600}>
-                      {user.name} ({user.role})
-                    </Typography>
-                  }
-                  description={
-                    <Typography variant="subtitle2">{user.email}</Typography>
-                  }
-                />
-              </List.Item>
-            )}
-          />
-        );
-      })}
+      <Table
+        pagination={{ showSizeChanger: true }}
+        dataSource={payload}
+        columns={[
+          ...(OrganisationColumn as ColumnsType<{
+            id: string;
+            name: string;
+            isDisabled: boolean;
+            users: {
+              userId: string;
+              name: string;
+              role: string;
+              email: string;
+              isDisabled: boolean;
+            }[];
+          }>),
+          {
+            title: "Actions",
+            key: "Action",
+            render: (record) => {
+              const menuId = `menu-${record.id}`;
+              return (
+                <>
+                  <IconButton
+                    id={menuId}
+                    aria-label="more"
+                    aria-expanded={openMenuId === menuId ? "true" : undefined}
+                    onClick={(e) => handleMenuClick(e, menuId)}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                  <Menu
+                    id={menuId}
+                    anchorEl={anchorEl}
+                    open={openMenuId === menuId}
+                    onClose={handleMenuClose}
+                  >
+                    <MenuItem
+                      component={Link}
+                      onClick={handleMenuClose}
+                      to={`CreateAdmin/${record.id}`}
+                    >
+                      Add Admin
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => handleOpenEditOrganisation(record.id)}
+                    >
+                      Edit Organisation
+                    </MenuItem>
+                    {record.isDisabled ? (
+                      <MenuItem
+                        id={`Enable-${record.id}`}
+                        onClick={() => handleOpenEnable(record.id)}
+                      >
+                        Enable Organisation
+                      </MenuItem>
+                    ) : (
+                      <MenuItem
+                        id={`Disable-${record.id}`}
+                        onClick={() => handleOpenDisable(record.id)}
+                      >
+                        Disable Organisation
+                      </MenuItem>
+                    )}
+                  </Menu>
+                </>
+              );
+            },
+          },
+        ]}
+        rowKey={"id"}
+        expandable={{
+          expandedRowRender: (record) => expandRecord(record.users),
+        }}
+        scroll={{ y: "calc(100vh - 300px)" }}
+      />
       <StyledDialog
         open={openEditOrganisation}
         onClose={handleCloseEditOrganisaion}

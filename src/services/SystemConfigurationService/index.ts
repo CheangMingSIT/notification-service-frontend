@@ -1,4 +1,5 @@
 export * from "./Permission/CreatePermission.action";
+export * from "./Permission/GroupPermission.loader.tsx";
 export * from "./Permission/PermissionList.loader";
 export * from "./Role/CreateRole.action";
 export * from "./Role/GetRole.loader";

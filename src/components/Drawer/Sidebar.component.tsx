@@ -24,6 +24,7 @@ function getItem(
 export function SideBarComponent({ role }) {
   const [collapsed, setCollapsed] = useState(true);
   const [collapsedWidth, setCollapsedWidth] = useState(80);
+  const [current, setCurrent] = useState("1");
   let items: MenuItem[] = [];
   if (role === "Owner") {
     items = [
@@ -70,6 +71,9 @@ export function SideBarComponent({ role }) {
       getItem(<Link to="./Logout">Logout</Link>, "6", <LogoutOutlined />),
     ];
   }
+  const onClick: MenuProps["onClick"] = (e) => {
+    setCurrent(e.key);
+  };
 
   return (
     <>
@@ -93,11 +97,18 @@ export function SideBarComponent({ role }) {
           }
         }}
         width={220}
-        style={{ paddingTop: 15 }}
+        style={{
+          paddingTop: 15,
+          position: "fixed",
+          zIndex: 1,
+          height: "100vh",
+          left: 0,
+        }}
       >
         <Menu
           theme="dark"
-          defaultSelectedKeys={["1"]}
+          onClick={onClick}
+          selectedKeys={[current]}
           mode="inline"
           items={items}
         />

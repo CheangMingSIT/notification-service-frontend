@@ -1,5 +1,5 @@
 import { json, redirect } from "react-router-dom";
-import { userURL } from "../../util/Config/config";
+import { userURL } from "../../util/config/config";
 
 export async function resetPasswordAction({ request }) {
   const data = await request.formData();
@@ -12,15 +12,15 @@ export async function resetPasswordAction({ request }) {
   }
   url.searchParams.set("token", token);
   const response = await fetch(url, {
-    method: "POST",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newPassword),
   });
 
-  if (response.ok === false) {
-    return json({ error: response.statusText }, response.status);
+  if (response.status === 400) {
+    throw new Response("No user found", { status: 400 });
   }
-  return redirect("/");
+  return redirect("/reset-successfully");
 }

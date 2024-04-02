@@ -4,15 +4,10 @@ interface RoleListDataTypes {
   No: number;
   id: string;
   Role: string;
+  isDisabled: boolean;
 }
 
 export const roleListColumn: TableProps<RoleListDataTypes>["columns"] = [
-  {
-    title: "No.",
-    dataIndex: "no",
-    key: "no",
-    responsive: ["md"],
-  },
   {
     title: "Organisation Name",
     dataIndex: "organisationName",
@@ -22,5 +17,16 @@ export const roleListColumn: TableProps<RoleListDataTypes>["columns"] = [
     title: "Role",
     dataIndex: "role",
     key: "role",
+    render: (text, record, _) => {
+      if (record.isDisabled === true) {
+        return (
+          <span>
+            {text} {"(Disabled)"}
+          </span>
+        );
+      } else {
+        return text;
+      }
+    },
   },
 ];

@@ -13,9 +13,4 @@ export const ApikeyListColumn: TableProps<ApiKeyDataTypes>["columns"] = [
     key: "secretKey",
     ellipsis: true,
   },
-  {
-    title: "isDisabled",
-    dataIndex: "isDisabled",
-    key: "isDisabled",
-  },
 ];

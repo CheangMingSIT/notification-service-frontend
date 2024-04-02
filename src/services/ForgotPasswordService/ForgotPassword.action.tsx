@@ -14,8 +14,9 @@ export async function forgotPasswordAction({ request }) {
       body: JSON.stringify({ email }),
     }
   );
-  if (!response.ok) {
-    return response.json();
+
+  if (response.status === 500) {
+    throw new Response("Failed to send reset link", { status: 500 });
   }
   return redirect("/");
 }

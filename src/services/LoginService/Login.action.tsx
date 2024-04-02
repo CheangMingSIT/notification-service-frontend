@@ -15,9 +15,13 @@ export async function loginAction({ request }) {
     },
     body: JSON.stringify(loginData),
   });
-  if (!response.ok) {
-    return response.json();
+  if (response.status === 401) {
+    return "Unauthorized";
   }
+  if (!response.ok) {
+    throw new Response(response.statusText, { status: response.status });
+  }
+
   const { token } = await response.json();
   localStorage.setItem("token", token);
 

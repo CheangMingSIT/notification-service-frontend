@@ -4,7 +4,13 @@ import { useNavigation } from "react-router-dom";
 import { NotificationRecordColumn, NotificationRecordDataTypes } from "..";
 import RecordDrawer from "../Drawer/Recorddrawer.component";
 
-export function NotificationRecord({ logs, pageHandler, page, pageSize }) {
+export function NotificationRecord({
+  logs,
+  pageHandler,
+  page,
+  pageSize,
+  totalCount,
+}) {
   const navigation = useNavigation();
 
   const [open, setOpen] = useState(false);
@@ -37,7 +43,7 @@ export function NotificationRecord({ logs, pageHandler, page, pageSize }) {
           message: log.message,
           scheduleDate: new Date(log.scheduleDate).toLocaleDateString("en-UK"),
         }))}
-        scroll={{ y: 640 }}
+        scroll={{ y: "calc(100vh - 275px)" }}
         loading={navigation.state === "loading" ? true : false}
         onRow={(record) => ({
           style: { cursor: "pointer" },
@@ -46,7 +52,7 @@ export function NotificationRecord({ logs, pageHandler, page, pageSize }) {
         onChange={handlePageChange}
         pagination={{
           showSizeChanger: true,
-          total: logs.length,
+          total: totalCount,
           defaultCurrent: 1,
           defaultPageSize: 10,
           pageSize: pageSize,
