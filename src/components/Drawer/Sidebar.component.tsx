@@ -5,6 +5,7 @@ import {
 } from "@ant-design/icons";
 import { AdminPanelSettingsOutlined } from "@mui/icons-material";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
+import { useMediaQuery, useTheme } from "@mui/material";
 import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
 import React, { useState } from "react";
@@ -23,6 +24,7 @@ function getItem(
 
 export function SideBarComponent({ role }) {
   const [collapsed, setCollapsed] = useState(true);
+  const theme = useTheme();
   const [collapsedWidth, setCollapsedWidth] = useState(80);
   const [current, setCurrent] = useState("1");
   let items: MenuItem[] = [];
@@ -68,13 +70,26 @@ export function SideBarComponent({ role }) {
         "2",
         <ProfileOutlined />
       ),
+      getItem("User Management", "3", <ManageAccountsOutlinedIcon />, [
+        getItem(<Link to="./UserManagement/ApiKeys">ApiKeys</Link>, "3.2"),
+      ]),
+      getItem(<Link to="./Logout">Logout</Link>, "6", <LogoutOutlined />),
+    ];
+  } else {
+    items = [
+      getItem(
+        <Link to="./NotificationRecords">Notification Records</Link>,
+        "2",
+        <ProfileOutlined />
+      ),
       getItem(<Link to="./Logout">Logout</Link>, "6", <LogoutOutlined />),
     ];
   }
+
   const onClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
   };
-
+  const sm = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <>
       <Sider
@@ -99,7 +114,7 @@ export function SideBarComponent({ role }) {
         width={220}
         style={{
           paddingTop: 15,
-          position: "fixed",
+          position: sm ? "fixed" : "fixed",
           zIndex: 1,
           height: "100vh",
           left: 0,

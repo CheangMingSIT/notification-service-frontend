@@ -8,14 +8,13 @@ export function Login() {
   const handleForgetPassword = () => {
     navigate("/forgot-password");
   };
-
   const response = useActionData();
   const [incorrectPassword, setIncorrectPassword] = useState(false);
   useEffect(() => {
     response === "Unauthorized"
       ? setIncorrectPassword(true)
       : setIncorrectPassword(false);
-  }, [Response]);
+  }, [response]);
   return (
     <>
       <Grid

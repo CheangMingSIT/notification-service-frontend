@@ -16,7 +16,6 @@ export async function UpdateOrganisation({ request }) {
     },
     body: JSON.stringify({ name }),
   });
-  console.log(response);
   if (!response.ok) {
     throw new Response(response.statusText, { status: response.status });
   }

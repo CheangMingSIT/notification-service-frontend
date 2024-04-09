@@ -1,6 +1,6 @@
 import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { ConfigProvider, Layout } from "antd";
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { theme } from "../../assets/style";
 import { SideBarComponent } from "../../components";
 
@@ -8,14 +8,25 @@ const { Content } = Layout;
 
 export function Root() {
   const data = useLoaderData();
+  const navigate = useNavigate();
   const sm = useMediaQuery(theme.breakpoints.down("sm"));
   let siderMarginLeft = 80;
   if (sm) {
     siderMarginLeft = 0;
   }
+  const token = localStorage.getItem("token");
+  const expirationTime = localStorage.getItem("expirationTime");
+  if (token !== null && expirationTime !== null) {
+    const currentTime = new Date().getTime();
+    if (currentTime > Number(expirationTime)) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("expirationTime");
+      navigate("/");
+    }
+  }
+
   return (
     <>
-      {}
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ConfigProvider
@@ -49,17 +60,13 @@ export function Root() {
             },
           }}
         >
-          <Layout hasSider>
+          <Layout hasSider style={{ minHeight: "100vh" }}>
             <SideBarComponent role={data} />
-          </Layout>
-          <Layout
-            style={{ marginLeft: siderMarginLeft, backgroundColor: "white" }}
-          >
-            <Content style={{ padding: 30 }}>
-              <main>
+            <Layout style={{ backgroundColor: "white" }}>
+              <Content style={{ padding: 30, marginLeft: siderMarginLeft }}>
                 <Outlet />
-              </main>
-            </Content>
+              </Content>
+            </Layout>
           </Layout>
         </ConfigProvider>
       </ThemeProvider>

@@ -11,7 +11,6 @@ async function Loader(id: number) {
       },
     }
   );
-
   if (!response.ok) {
     return response;
   }

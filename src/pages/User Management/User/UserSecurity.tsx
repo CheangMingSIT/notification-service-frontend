@@ -39,7 +39,6 @@ export function UserSecurity() {
   const theme = useTheme();
   const submit = useSubmit();
   const payload = useLoaderData() as UserDataType;
-  console.log(payload);
   const dropdownRole = useRouteLoaderData("role-dropdown") as RoleListDataTypes;
   const [openDisable, setOpenDisable] = useState(false);
   const [role, setRole] = useState("");

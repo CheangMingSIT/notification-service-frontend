@@ -25,7 +25,7 @@ export async function searchLogsLoader({ request }) {
     },
   });
 
-  if (response.status === 403) {
+  if (response.status === 403 || response.status === 401) {
     throw new Response("Forbidden to view this notification records", {
       status: response.status,
     });

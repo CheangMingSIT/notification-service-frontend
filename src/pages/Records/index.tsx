@@ -1,6 +1,5 @@
 import { FilterList } from "@mui/icons-material";
-import { Button, Popover, Typography } from "@mui/material";
-import { Col, Row } from "antd";
+import { Button, Grid, Popover, Stack, Typography } from "@mui/material";
 
 import { useState } from "react";
 import { useLoaderData, useSearchParams } from "react-router-dom";
@@ -48,16 +47,16 @@ export function Records() {
       <Typography variant="h5" fontWeight={700}>
         Notification Records
       </Typography>
-      <Row gutter={[16, 16]}>
-        <Col
-          xs={24}
-          sm={24}
-          md={24}
-          lg={24}
-          xl={24}
-          style={{ marginTop: "1rem" }}
-        >
-          <Row justify={"end"}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} justifyContent={"space-between"}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography variant="overline" display={"block"}>
+              Total: {data.totalCount} Records
+            </Typography>
             <Button
               variant="text"
               color="info"
@@ -90,7 +89,9 @@ export function Records() {
             >
               <FilterForm handleSearch={handleSearch} />
             </Popover>
-          </Row>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
           <NotificationRecord
             logs={data.payload}
             pageHandler={handlePage}
@@ -98,8 +99,8 @@ export function Records() {
             pageSize={pageSize}
             totalCount={data.totalCount}
           />
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
     </>
   );
 }

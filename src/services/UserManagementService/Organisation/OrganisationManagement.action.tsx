@@ -2,7 +2,6 @@ import { redirect } from "react-router-dom";
 import { ErrorDataTypes, userURL } from "../../../util";
 
 export async function CreateOrganisationAction({ request }) {
-  console.log(request, "request");
   const error = {} as ErrorDataTypes;
   const data = await request.formData();
   const name = await data.get("organisationName");
