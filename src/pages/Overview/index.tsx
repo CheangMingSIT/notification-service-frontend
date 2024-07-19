@@ -27,7 +27,7 @@ export function Overview() {
           series={[
             {
               data: data.countMonthData,
-              label: "Sent Request",
+              label: "Total Sent Request",
             },
             {
               data: data.undeliveredCount,

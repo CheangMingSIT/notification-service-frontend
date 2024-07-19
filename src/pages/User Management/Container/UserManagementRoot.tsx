@@ -65,7 +65,7 @@ export function UserManagementRoot() {
           <Grid container spacing={2}>
             <Grid item xs={6} sm={6} md={8} lg={9}>
               <Typography variant="h5" fontWeight={700}>
-                Organisation
+                Department
               </Typography>
             </Grid>
             <Grid item xs={6} sm={6} md={4} lg={3} textAlign={"right"}>

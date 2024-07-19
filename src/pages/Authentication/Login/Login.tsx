@@ -24,7 +24,8 @@ export function Login() {
         columnSpacing={2}
         minHeight={"100vh"}
       >
-        <Grid item md={6} xs={12}>
+        <Grid item md={2} />
+        <Grid item xs={12} md={8}>
           <Typography variant="h4" gutterBottom>
             Welcome Back!
           </Typography>
@@ -33,13 +34,7 @@ export function Login() {
             incorrectPassword={incorrectPassword}
           />
         </Grid>
-        <Grid item md={6} sx={{ display: { xs: "none", md: "block" } }}>
-          <img
-            src="src/assets/illustration/login.svg"
-            alt="login illustration"
-            style={{ width: "100%", height: "100%" }}
-          />
-        </Grid>
+        <Grid item md={2} />
       </Grid>
     </>
   );

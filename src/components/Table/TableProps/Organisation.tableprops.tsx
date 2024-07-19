@@ -15,13 +15,13 @@ interface OrganisationColumnProps {
 export const OrganisationColumn: TableColumnsType<OrganisationColumnProps> = [
   Table.EXPAND_COLUMN,
   {
-    title: "Organisation ID",
+    title: "Department ID",
     dataIndex: "id",
     responsive: ["md"],
     key: "id",
   },
   {
-    title: "Organisation Name",
+    title: "Department Name",
     dataIndex: "name",
     key: "name",
     sorter: (a, b) => a.name.localeCompare(b.name),

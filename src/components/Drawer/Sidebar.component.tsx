@@ -39,7 +39,7 @@ export function SideBarComponent({ role }) {
       // getItem(<Link to="./Analytics">Analytics</Link>, "3", <BarChartOutlined />),
       getItem("User Management", "4", <ManageAccountsOutlinedIcon />, [
         getItem(
-          <Link to="./UserManagement/Organisation">Organisation</Link>,
+          <Link to="./UserManagement/Organisation">Department</Link>,
           "4.3"
         ),
       ]),
